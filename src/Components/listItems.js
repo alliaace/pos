@@ -139,6 +139,13 @@ export default function NestedList() {
 
                 </List>
             </Collapse>
+            <ListItem button onClick={() => window.location = '/invoice'}>
+                <ListItemIcon>
+                    <ShowChartIcon style={{ color: '#f5f5f5' }} />
+                </ListItemIcon>
+                <ListItemText primary="Invoice" />
+
+            </ListItem>
 
 
 

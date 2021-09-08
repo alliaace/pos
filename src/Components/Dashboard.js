@@ -19,6 +19,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MainListItems from './listItems';
+import Toast from './Toast/toast'
 
 
 
@@ -142,6 +143,7 @@ export default function Dashboard() {
     return (
         <div className={classes.root}>
             <CssBaseline />
+
             <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
                 <Toolbar className={classes.toolbar}>
                     <IconButton
@@ -156,6 +158,16 @@ export default function Dashboard() {
                     <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
                         Admin Panel
                     </Typography>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        size="large"
+                        className={classes.button}
+                        // startIcon={<SaveIcon />}
+                        onClick={() => window.location = '/invoice'}
+                    >
+                        Invoice
+                    </Button>
                     <Button
                         variant="contained"
                         color="primary"
@@ -209,6 +221,7 @@ export default function Dashboard() {
                         <ChevronLeftIcon style={{ color: '#f5f5f5' }} />
                     </IconButton>
                 </div>
+
                 <Divider />
                 <MainListItems />
                 {/* <Divider /> */}
