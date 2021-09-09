@@ -53,7 +53,7 @@ export default function NestedList() {
             aria-labelledby="nested-list-subheader"
             subheader={
                 <ListSubheader component="div" id="nested-list-subheader" >
-                    <h1 style={{ color: '#f5f5f5' }}>Dashboard</h1>
+                    <h1 ><a href='/' style={{ color: '#f5f5f5', textDecoration: 'none' }}>Dashboard</a></h1>
                 </ListSubheader>
             }
             style={{ backgroundColor: '#003366', color: '#f5f5f5' }}

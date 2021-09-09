@@ -42,6 +42,9 @@ export default function Home() {
                 <Grid item xs={3} ><CountCard countCard={true} title="Total Invoice" count={totalInvoice} icon={<HomeIcon style={{ marginTop: 20 }} />} /></Grid>
 
                 <Grid item xs={3} ><CountCard link='/invoice' title="Create POS Invoice" icon={<HomeIcon style={{ marginTop: 20 }} />} /></Grid>
+                <Grid item xs={3} ><CountCard link='/addstock' title="Add Product" icon={<HomeIcon style={{ marginTop: 20 }} />} /></Grid>
+                <Grid item xs={3} ><CountCard link='/addcustomer' title="Add Customer" icon={<HomeIcon style={{ marginTop: 20 }} />} /></Grid>
+                <Grid item xs={3} ><CountCard link='/addsupplier' title="Add Supplier" icon={<HomeIcon style={{ marginTop: 20 }} />} /></Grid>
 
             </Grid>
         </Container>

@@ -74,22 +74,8 @@ export default function Checkout() {
                     </Typography>
                 </Toolbar>
             </AppBar>
-            <main className={classes.layout}>
-                <Paper className={classes.paper}>
-                    <Typography component="h1" variant="h4" align="center">
 
-                        {history.location.pathname == '/addcustomer' && "Add a new Customer"}
-                        {history.location.pathname == '/editcustomer' && "Edit Customer"}
-                        {history.location.pathname == '/addsupplier' && "Add a new Supplier"}
-                        {history.location.pathname == '/editsupplier' && "Edit Supplier"}
-                    </Typography>
-
-                    <React.Fragment>
-                        <Form />
-                    </React.Fragment>
-                </Paper>
-                {/* <Copyright /> */}
-            </main>
+            <Form />
         </React.Fragment>
     );
 }
