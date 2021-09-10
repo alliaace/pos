@@ -161,7 +161,7 @@ export default function Dashboard() {
                     <Button
                         variant="contained"
                         color="primary"
-                        size="large"
+                        size="small"
                         className={classes.button}
                         // startIcon={<SaveIcon />}
                         onClick={() => window.location = '/invoice'}
@@ -171,7 +171,7 @@ export default function Dashboard() {
                     <Button
                         variant="contained"
                         color="primary"
-                        size="large"
+                        size="small"
                         className={classes.button}
                         // startIcon={<SaveIcon />}
                         onClick={() => window.location = '/addcustomer'}
@@ -181,7 +181,7 @@ export default function Dashboard() {
                     <Button
                         variant="contained"
                         color="primary"
-                        size="large"
+                        size="small"
                         className={classes.button}
                         // startIcon={<SaveIcon />}
                         onClick={() => window.location = '/addsupplier'}
@@ -191,7 +191,7 @@ export default function Dashboard() {
                     <Button
                         variant="contained"
                         color="primary"
-                        size="large"
+                        size="small"
                         className={classes.button}
                         // startIcon={<SaveIcon />}
                         onClick={() => window.location = '/addstock'}

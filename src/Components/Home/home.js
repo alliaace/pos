@@ -1,8 +1,9 @@
-import { Container, Grid } from '@material-ui/core'
+import { AppBar, Container, Grid } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import CountCard from './Components/customCountCard'
 import HomeIcon from '@material-ui/icons/Home'
 import api from '../../api/api'
+
 
 export default function Home() {
 
@@ -34,19 +35,23 @@ export default function Home() {
 
     }, [])
     return (
-        <Container>
-            <Grid container spacing={3}>
-                <Grid item xs={3} ><CountCard countCard={true} title="Total Customer" count={totalCustomers} icon={<HomeIcon style={{ marginTop: 20 }} />} /></Grid>
-                <Grid item xs={3} ><CountCard countCard={true} title="Total Product" count={totalStock} icon={<HomeIcon style={{ marginTop: 20 }} />} /></Grid>
-                <Grid item xs={3} ><CountCard countCard={true} title="Total Supplier" count={totalSuppliers} icon={<HomeIcon style={{ marginTop: 20 }} />} /></Grid>
-                <Grid item xs={3} ><CountCard countCard={true} title="Total Invoice" count={totalInvoice} icon={<HomeIcon style={{ marginTop: 20 }} />} /></Grid>
+        <>
+            <AppBar>hello</AppBar>
+            <Container>
 
-                <Grid item xs={3} ><CountCard link='/invoice' title="Create POS Invoice" icon={<HomeIcon style={{ marginTop: 20 }} />} /></Grid>
-                <Grid item xs={3} ><CountCard link='/addstock' title="Add Product" icon={<HomeIcon style={{ marginTop: 20 }} />} /></Grid>
-                <Grid item xs={3} ><CountCard link='/addcustomer' title="Add Customer" icon={<HomeIcon style={{ marginTop: 20 }} />} /></Grid>
-                <Grid item xs={3} ><CountCard link='/addsupplier' title="Add Supplier" icon={<HomeIcon style={{ marginTop: 20 }} />} /></Grid>
+                <Grid container spacing={3}>
+                    <Grid item xs={3} ><CountCard countCard={true} title="Total Customer" count={totalCustomers} icon={<img src="./images/customer.png" width={60} />} /></Grid>
+                    <Grid item xs={3} ><CountCard countCard={true} title="Total Product" count={totalStock} icon={<img src="./images/products-icon-3.png" width={60} />} /></Grid>
+                    <Grid item xs={3} ><CountCard countCard={true} title="Total Supplier" count={totalSuppliers} icon={<img src="./images/supplier.png" width={60} />} /></Grid>
+                    <Grid item xs={3} ><CountCard countCard={true} title="Total Invoice" count={totalInvoice} icon={<img src="./images/invoice.png" width={60} />} /></Grid>
 
-            </Grid>
-        </Container>
+                    <Grid item xs={3} ><CountCard link='/invoice' title="Create POS Invoice" icon={<img src="./images/pos_invoice.png" width={40} />} /></Grid>
+                    <Grid item xs={3} ><CountCard link='/addstock' title="Add Product" icon={<img src="./images/product.png" width={40} />} /></Grid>
+                    <Grid item xs={3} ><CountCard link='/addcustomer' title="Add Customer" icon={<img src="./images/add_customer.png" width={40} />} /></Grid>
+                    <Grid item xs={3} ><CountCard link='/addsupplier' title="Add Supplier" icon={<img src="./images/supplier.png" width={60} />} /></Grid>
+
+                </Grid>
+            </Container>
+        </>
     )
 }

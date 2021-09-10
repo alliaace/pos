@@ -11,14 +11,17 @@ import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import Form from './form';
+import Breadcrumbs from '@material-ui/core/Breadcrumbs';
+
 
 import { useHistory } from 'react-router-dom';
+import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
         position: 'relative',
-        backgroundColor: '#002447',
-        color: '#f5f5f5'
+        backgroundColor: 'white',
+        color: 'black'
     },
     layout: {
         width: 'auto',
@@ -63,15 +66,26 @@ export default function Checkout() {
     return (
         <React.Fragment>
             <CssBaseline />
+
             <AppBar position="absolute" className={classes.appBar} >
                 <Toolbar>
-                    <Typography variant="h6" color="inherit" noWrap>
-                        {history.location.pathname == '/addcustomer' || history.location.pathname == '/editcustomer'
-                            ?
-                            "Customer" :
-                            "Supplier"
-                        }
-                    </Typography>
+                    <Grid xs={9}>
+                        <Typography variant="h6" color="inherit" noWrap>
+
+                            {history.location.pathname == '/addcustomer' && "Add Customer"}
+                            {history.location.pathname == '/editcustomer' && "Edit Customer"}
+                            {history.location.pathname == '/editsupplier' && "Edit Supplier"}
+                            {history.location.pathname == '/addsupplier' && "Add Supplier"}
+                        </Typography>
+                    </Grid>
+                    <Breadcrumbs aria-label="breadcrumb" style={{ float: 'right' }}>
+                        <Link color="inherit" href="/" >
+                            Dashboard
+                        </Link>
+
+                        <Typography color="textPrimary">Add Customer</Typography>
+                    </Breadcrumbs>
+
                 </Toolbar>
             </AppBar>
 

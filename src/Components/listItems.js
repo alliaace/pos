@@ -74,7 +74,7 @@ export default function NestedList() {
                         <ListItemIcon>
                             <ListIcon style={{ color: '#f5f5f5' }} />
                         </ListItemIcon>
-                        <ListItemText primary="List" />
+                        <ListItemText primary="Manage Customer" />
                     </ListItem>
                     <ListItem button className={classes.nested} onClick={() => window.location = '/addcustomer'}>
                         <ListItemIcon>
@@ -100,7 +100,7 @@ export default function NestedList() {
                         <ListItemIcon>
                             <ListIcon style={{ color: '#f5f5f5' }} />
                         </ListItemIcon>
-                        <ListItemText primary="List" />
+                        <ListItemText primary="Manage Supplier" />
                     </ListItem>
                     <ListItem button className={classes.nested} onClick={() => window.location = '/addsupplier'}>
                         <ListItemIcon>
@@ -128,7 +128,7 @@ export default function NestedList() {
                         <ListItemIcon>
                             <ListIcon style={{ color: '#f5f5f5' }} />
                         </ListItemIcon>
-                        <ListItemText primary="List" />
+                        <ListItemText primary="Manage Stock" />
                     </ListItem>
                     <ListItem button className={classes.nested} onClick={() => window.location = '/addstock'}>
                         <ListItemIcon>

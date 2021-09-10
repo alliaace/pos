@@ -33,13 +33,18 @@ export default function Form() {
     const [contact, setContact] = useState('')
     const [PBalance, setPBalance] = useState('')
     const [state, setState] = useState('addcustomer')
+    const [title, setTitle] = useState('Customer')
     const getCustomer = async (id) => {
         try {
+            // alert('this here ')
             const res = await api.get(`customer/get/${id}`)
             setFirstName(res.data.data.customer_name)
             setAddress(res.data.data.address)
             setContact(res.data.data.contact_no)
-            // alert(JSON.stringify(res.data.data.customer_name))
+            setEmail(res.data.data.email)
+            setPBalance(res.data.data.previous_balance)
+            // alert(JSON.stringify(res.data.data))
+
         } catch (error) {
 
         }
@@ -60,14 +65,18 @@ export default function Form() {
         if (history.location.pathname == "/editcustomer") {
             getCustomer(history.location.state.id)
             setState('editcustomer')
+            setTitle('Customer')
+
         }
         if (history.location.pathname == "/editsupplier") {
             getsupplier(history.location.state.id)
             setState('editsupplier')
+            setTitle('Supplier')
         }
         if (history.location.pathname == "/addsupplier") {
             // getCustomer(history.location.state.id)
             setState('addsupplier')
+            setTitle('Supplier')
         }
 
     }, [])
@@ -88,12 +97,14 @@ export default function Form() {
     const addCustomer = async () => {
         const res = await api.post(`customer/add`, {
             customer_name: firstName,
-            contact_no: JSON.stringify(contact),
-            address
+            customer_email: email,
+            contact_no: contact,
+            address,
+            previous_balance: PBalance
         });
 
         if (res.status === 200) {
-            alert("Saved successfully");
+            history.push("/customerlist");
 
             // this.props.history.push("/customers");
         } else {
@@ -105,13 +116,15 @@ export default function Form() {
     const editCustomer = async () => {
         const res = await api.put(`customer/update/${history.location.state.id}`, {
             customer_name: firstName,
-            contact_no: JSON.stringify(contact),
-            address
+            customer_email: email,
+            contact_no: contact,
+            address,
+            previous_balance: PBalance
         });
         // alert(JSON.stringify(res.data))
 
         if (res.status === 200) {
-            alert("Saved successfully");
+            history.push("/customerlist");
 
             // this.props.history.push("/customers");
         } else {
@@ -124,8 +137,10 @@ export default function Form() {
         // alert('i am at add supplier')
         const res = await api.post(`supplier/add`, {
             supplier_name: firstName,
-            contact_no: [JSON.stringify(contact)],
-            address
+            supplier_email: email,
+            contact_no: contact,
+            address,
+            previous_balance: PBalance
         });
 
         if (res.status === 200) {
@@ -140,14 +155,16 @@ export default function Form() {
     }
     const editSupplier = async () => {
         const res = await api.put(`supplier/update/${history.location.state.id}`, {
-            customer_name: firstName,
-            contact_no: JSON.stringify(contact),
-            address
+            supplier_name: firstName,
+            supplier_email: email,
+            contact_no: contact,
+            address,
+            previous_balance: PBalance
         });
         // alert(JSON.stringify(res.data))
 
         if (res.status === 200) {
-            alert("Saved successfully");
+            history.push("/supplierlist");
 
             // this.props.history.push("/customers");
         } else {
@@ -160,7 +177,7 @@ export default function Form() {
     return (
         <React.Fragment>
 
-            <Grid container xs={12} style={{ padding: '0 250px 0 200px' }}>
+            <Grid container xs={12} style={{ padding: '0 250px 0 200px', marginTop: 50 }}>
                 {/* <form onSubmit > */}
 
                 <TextField
@@ -168,13 +185,14 @@ export default function Form() {
                     id="firstName"
                     name="firstName"
                     label="First name"
-                    placeholder="Customer Name"
+                    placeholder={`${title} Name`}
                     autoComplete="given-name"
                     variant="filled"
                     value={firstName}
-                    title='Customer Name'
+                    title={`${title} Name`}
                     onChange={(e) => setFirstName(e.target.value)}
-                    style={{ borderWidth: 0.1, width: '100%', height: 35 }}
+                    style={{ height: 35, marginBottom: 10 }}
+                // style={{ borderWidth: 0.1, width: '100%', height: 35 }}
                 />
 
 
@@ -183,10 +201,11 @@ export default function Form() {
                     id="email"
                     name="email"
                     label="Email"
-                    placeholder="Customer Email"
+                    placeholder={`${title} Email`}
                     value={email}
-                    title="Customer Email"
+                    title={`${title} Email`}
                     onChange={(e) => setEmail(e.target.value)}
+                    style={{ height: 35, marginBottom: 10 }}
                 />
                 <TextField
                     // required
@@ -194,10 +213,11 @@ export default function Form() {
                     name="contact"
 
 
-                    title="Customer Mobile"
-                    placeholder="Customer Mobile"
+                    title={`${title} Mobile`}
+                    placeholder={`${title} Mobile`}
                     value={contact}
                     onChange={(e) => setContact(e.target.value)}
+                    style={{ height: 35, marginBottom: 10 }}
 
                 />
 
@@ -206,12 +226,13 @@ export default function Form() {
                     // required
                     id="address1"
                     name="address1"
-                    title="Customer Address"
-                    placeholder="Customer Address"
+                    title={`${title} Address`}
+                    placeholder={`${title} Address`}
                     type="textarea"
                     style={{ marginBottom: 20 }}
                     value={address}
                     onChange={(e) => setAddress(e.target.value)}
+                    style={{ height: 35, marginBottom: 50 }}
                 />
 
 
@@ -223,6 +244,7 @@ export default function Form() {
                     placeholder="Previous Balance"
                     value={PBalance}
                     onChange={(e) => setPBalance(e.target.value)}
+                    style={{ height: 35, marginBottom: 10 }}
 
                 />
 
@@ -232,11 +254,12 @@ export default function Form() {
                 <Grid item xs={12} sm={6}>
                     <Button
                         variant="contained"
-                        color="primary"
-                        size="large"
+                        // color="primary"
+                        size="small"
                         className={classes.button}
-                        startIcon={<SaveIcon />}
+                        // startIcon={<SaveIcon />}
                         onClick={() => checkApiCall()}
+                        style={{ backgroundColor: '#003366', color: 'white' }}
                     >
                         Save
                     </Button>

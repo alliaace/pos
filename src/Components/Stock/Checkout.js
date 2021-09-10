@@ -66,25 +66,13 @@ export default function Checkout() {
             <AppBar position="absolute" className={classes.appBar} >
                 <Toolbar>
                     <Typography variant="h6" color="inherit" noWrap>
-                        Stocks
+                        Add Stock
                     </Typography>
                 </Toolbar>
             </AppBar>
-            <main className={classes.layout}>
-                <Paper className={classes.paper}>
-                    <Typography component="h1" variant="h4" align="center">
 
-                        {history.location.pathname == '/addstock' && "Add a new Stock"}
-                        {history.location.pathname == '/editstock' && "Edit Stock"}
+            <Form />
 
-                    </Typography>
-
-                    <React.Fragment>
-                        <Form />
-                    </React.Fragment>
-                </Paper>
-                {/* <Copyright /> */}
-            </main>
         </React.Fragment>
     );
 }

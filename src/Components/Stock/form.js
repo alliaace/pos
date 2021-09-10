@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import TextField from '@material-ui/core/TextField';
+import TextField from '../Form/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -81,8 +81,8 @@ export default function Form() {
         });
 
         if (res.status === 200) {
-            alert("Saved successfully");
-            // alert(JSON.stringify(res.data))
+            // alert("Saved successfully");
+            alert(JSON.stringify(res.data.data))
             // this.props.history.push("/customers");
         } else {
             throw new Error(
@@ -117,129 +117,125 @@ export default function Form() {
     return (
         <React.Fragment>
 
-            <Grid container spacing={3}>
+            <Grid container xs={12} style={{ padding: '0 250px 0 200px', marginTop: 50 }}>
                 {/* <form onSubmit > */}
 
-                <Grid item xs={12} sm={6}>
-                    <TextField
-                        required
-                        id="productname"
-                        name="productname"
-                        label="Product Name"
-                        fullWidth
-                        autoComplete="given-name"
-                        variant="filled"
-                        value={prodcutName}
-                        InputProps={{
-                            startAdornment: <InputAdornment position="start"><PeopleIcon /></InputAdornment>,
-                        }}
-                        onChange={(e) => setProductName(e.target.value)}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <TextField
-                        required
-                        id="suppliername"
-                        name="suppliername"
-                        label="Supplier name"
-                        fullWidth
-                        autoComplete="family-name"
-                        variant="filled"
-                        value={supplierName}
-                        InputProps={{
-                            startAdornment: <InputAdornment position="start"><PeopleIcon /></InputAdornment>,
-                        }}
-                        onChange={(e) => setSupplierName(e.target.value)}
-                    />
-                </Grid>
-                <Grid item xs={12}>
-                    <TextField
-                        required
-                        id="date"
-                        name="date"
-                        label="Buy Date"
-                        fullWidth
-                        type="datetime-local"
-                        autoComplete="shipping address-line1"
-                        variant="filled"
-                        value={buyDate}
-                        InputProps={{
-                            startAdornment: <InputAdornment position="start"><PeopleIcon /></InputAdornment>,
-                        }}
-                        onChange={(e) => setBuyDate(e.target.value)}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <TextField
-                        id="productpercarton"
-                        name="productpercarton"
-                        label="Product per carton"
-                        fullWidth
-                        autoComplete="shipping address-line2"
-                        variant="filled"
-                        value={productPerCarton}
-                        InputProps={{
-                            startAdornment: <InputAdornment position="start"><PeopleIcon /></InputAdornment>,
-                        }}
-                        onChange={(e) => setProductPerCarton(e.target.value)}
-                    />
-                </Grid>
+                {/* <Grid item xs={12} > */}
+                <TextField
+                    required
+                    id="productname"
+                    name="productname"
+                    label="Product Name"
+                    fullWidth
+                    title='Product Name'
+                    placeholder='Product Name'
+                    autoComplete="given-name"
+                    variant="filled"
+                    value={prodcutName}
+                    style={{ height: 35, marginBottom: 10 }}
+                    onChange={(e) => setProductName(e.target.value)}
+                />
 
-                <Grid item xs={12} sm={6}>
-                    <TextField
-                        required
-                        id="quantity"
-                        name="quantity"
-                        label="Quantity"
-                        fullWidth
-                        autoComplete="shipping postal-code"
-                        variant="filled"
-                        value={quantity}
-                        onChange={(e) => setQuantity(e.target.value)}
-                        InputProps={{
-                            startAdornment: <InputAdornment position="start"><PeopleIcon /></InputAdornment>,
-                        }}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <TextField
-                        required
-                        id="buyprice"
-                        name="buyprice"
-                        label="Buy Price"
-                        fullWidth
-                        autoComplete="shipping postal-code"
-                        variant="filled"
-                        value={buyPrice}
-                        onChange={(e) => setBuyPrice(e.target.value)}
-                        InputProps={{
-                            startAdornment: <InputAdornment position="start"><PeopleIcon /></InputAdornment>,
-                        }}
-                    />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                    <TextField
-                        required
-                        id="saleprice"
-                        name="saleprice"
-                        label="Sale Price"
-                        fullWidth
-                        autoComplete="shipping postal-code"
-                        variant="filled"
-                        value={salePrice}
-                        onChange={(e) => setSalePrice(e.target.value)}
-                        InputProps={{
-                            startAdornment: <InputAdornment position="start"><PeopleIcon /></InputAdornment>,
-                        }}
-                    />
-                </Grid>
+                {/* </Grid> */}
+                {/* <Grid item xs={12} sm={6}> */}
+                <TextField
+                    required
+                    id="suppliername"
+                    name="suppliername"
+                    title="Supplier name"
+                    placeholder="Supplier name"
+                    fullWidth
+                    autoComplete="family-name"
+                    variant="filled"
+                    value={supplierName}
+                    style={{ height: 35, marginBottom: 10 }}
+                    onChange={(e) => setSupplierName(e.target.value)}
+                />
+                {/* </Grid> */}
+                {/* <Grid item xs={12}> */}
+                <TextField
+                    required
+                    id="date"
+                    name="date"
+                    title="Buy Date"
+
+                    inputType="datetime-local"
+                    // type="datetime-local"
+                    autoComplete="shipping address-line1"
+                    variant="filled"
+                    value={buyDate}
+                    style={{ height: 35, marginBottom: 10 }}
+                    onChange={(e) => setBuyDate(e.target.value)}
+                />
+                {/* </Grid> */}
+                {/* <Grid item xs={12} sm={6}> */}
+                <TextField
+                    required
+                    id="productpercarton"
+                    name="productpercarton"
+                    title="Product per carton"
+                    placeholder="Product per carton"
+                    fullWidth
+                    autoComplete="shipping address-line2"
+                    variant="filled"
+                    value={productPerCarton}
+                    style={{ height: 35, marginBottom: 10 }}
+                    onChange={(e) => setProductPerCarton(e.target.value)}
+                />
+                {/* </Grid> */}
+
+                {/* <Grid item xs={12} sm={6}> */}
+                <TextField
+                    required
+                    id="quantity"
+                    name="quantity"
+                    title="Quantity"
+                    placeholder="Quantity"
+                    fullWidth
+                    autoComplete="shipping postal-code"
+                    variant="filled"
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
+                    style={{ height: 35, marginBottom: 10 }}
+                />
+                {/* </Grid> */}
+                {/* <Grid item xs={12} sm={6}> */}
+                <TextField
+                    required
+                    id="buyprice"
+                    name="buyprice"
+                    title="Buy Price"
+                    placeholder="Buy Price"
+                    fullWidth
+                    autoComplete="shipping postal-code"
+                    variant="filled"
+                    value={buyPrice}
+                    onChange={(e) => setBuyPrice(e.target.value)}
+                    style={{ height: 35, marginBottom: 10 }}
+                />
+                {/* </Grid> */}
+                {/* <Grid item xs={12} sm={6}> */}
+                <TextField
+                    required
+                    id="saleprice"
+                    name="saleprice"
+                    title="Sale Price"
+                    placeholder="Sale Price"
+                    fullWidth
+                    autoComplete="shipping postal-code"
+                    variant="filled"
+                    value={salePrice}
+                    onChange={(e) => setSalePrice(e.target.value)}
+                    style={{ height: 35, marginBottom: 10 }}
+                />
+                {/* </Grid> */}
                 <Grid item xs={12} sm={6}>
                     <Button
                         variant="contained"
                         color="primary"
-                        size="large"
+                        size="small"
                         className={classes.button}
-                        startIcon={<SaveIcon />}
+                        // startIcon={<SaveIcon />}
                         onClick={() => checkApiCall()}
                     >
                         Save
