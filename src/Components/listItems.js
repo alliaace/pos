@@ -35,6 +35,7 @@ export default function NestedList() {
     const [customer, setCustomer] = React.useState(true);
     const [supplier, setSupplier] = React.useState(true);
     const [stock, setStock] = React.useState(true);
+    const [invoice, setInvoice] = React.useState(true);
 
     const handleClickCustomer = () => {
         setCustomer(!customer);
@@ -44,6 +45,9 @@ export default function NestedList() {
     };
     const handleClickStock = () => {
         setStock(!stock);
+    };
+    const handleClickInvoice = () => {
+        setInvoice(!invoice);
     };
 
 
@@ -60,6 +64,44 @@ export default function NestedList() {
 
             className={classes.root}
         >
+
+
+
+
+
+
+
+
+
+
+
+            <ListItem button onClick={handleClickInvoice}>
+                <ListItemIcon>
+                    <ShowChartIcon style={{ color: '#f5f5f5' }} />
+                </ListItemIcon>
+                <ListItemText primary="Sell" />
+                {invoice ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={invoice} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                    <ListItem button className={classes.nested} onClick={() => window.location = '/invoice'}>
+                        <ListItemIcon>
+                            <ListIcon style={{ color: '#f5f5f5' }} />
+                        </ListItemIcon>
+                        <ListItemText primary="Manage Invoice" />
+                    </ListItem>
+                    <ListItem button className={classes.nested} onClick={() => window.location = '/addinvoice'}>
+                        <ListItemIcon>
+                            <AddIcon style={{ color: 'f5f5f5' }} />
+                        </ListItemIcon>
+                        <ListItemText primary="Add new Invoice" />
+                    </ListItem>
+
+                </List>
+            </Collapse>
+
+
+
 
             <ListItem button onClick={handleClickCustomer}>
                 <ListItemIcon>
@@ -139,13 +181,11 @@ export default function NestedList() {
 
                 </List>
             </Collapse>
-            <ListItem button onClick={() => window.location = '/invoice'}>
-                <ListItemIcon>
-                    <ShowChartIcon style={{ color: '#f5f5f5' }} />
-                </ListItemIcon>
-                <ListItemText primary="Invoice" />
 
-            </ListItem>
+
+
+
+
 
 
 

@@ -236,7 +236,7 @@ export default function EnhancedTable() {
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(100);
     const [userData, setUserData] = React.useState([]);
     const [openDialog, setOpenDialog] = React.useState(false);
     const [itemToDelete, setItemToDelete] = React.useState('');
@@ -393,7 +393,7 @@ export default function EnhancedTable() {
                         />
                         <TableBody>
                             {stableSort(rows, getComparator(order, orderBy))
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                // .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
                                     const isItemSelected = isSelected(row.Id);
                                     const labelId = `enhanced-table-checkbox-${index}`;

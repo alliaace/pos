@@ -6,6 +6,7 @@ import StockList from "../Components/Stock/StockList";
 import StockCheckout from '../Components/Stock/Checkout'
 import PrintInvoice from '../Components/Invoice/PrintInvoice'
 import Home from '../Components/Home/home'
+import AddInvoice from "../Components/Invoice/AddInvoice";
 
 export default function App() {
     return (
@@ -30,6 +31,7 @@ export default function App() {
 
 
             <Route exact path="/invoice" component={PrintInvoice} />
+            <Route exact path="/addinvoice" component={AddInvoice} />
         </Switch>
     );
 }
