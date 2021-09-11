@@ -50,7 +50,7 @@ export default function AddInvoice() {
                 setToast(true)
                 setType('success')
                 setTitle('Added Succesfully')
-                history.push({ pathname: '/invoice', state: { name: selectedProduct.product_name, price, quantity: selectedCartons, grand_total: total - discount } })
+                history.push({ pathname: '/printinvoice', state: { name: selectedProduct.product_name, price, quantity: selectedCartons, grand_total: total - discount } })
             }
             else {
 

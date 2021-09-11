@@ -7,6 +7,10 @@ import StockCheckout from '../Components/Stock/Checkout'
 import PrintInvoice from '../Components/Invoice/PrintInvoice'
 import Home from '../Components/Home/home'
 import AddInvoice from "../Components/Invoice/AddInvoice";
+import AddProduct from '../Components/Product/AddProduct'
+import ManageCategory from '../Components/Product/ManageCategory'
+import ManageProduct from '../Components/Product/ManageProduct'
+import Manageinvoice from '../Components/Invoice/ManageInvoice'
 
 export default function App() {
     return (
@@ -30,8 +34,15 @@ export default function App() {
 
 
 
-            <Route exact path="/invoice" component={PrintInvoice} />
+            <Route exact path="/manageinvoice" component={Manageinvoice} />
+            <Route exact path="/printinvoice" component={PrintInvoice} />
             <Route exact path="/addinvoice" component={AddInvoice} />
+
+
+
+            <Route exact path="/addcategory" component={ManageCategory} />
+            <Route exact path="/addproduct" component={AddProduct} />
+            <Route exact path="/manageproduct" component={ManageProduct} />
         </Switch>
     );
 }

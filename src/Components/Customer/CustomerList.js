@@ -238,10 +238,10 @@ export default function EnhancedTable() {
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(100);
     const [userData, setUserData] = React.useState([]);
-    const [openDialog, setOpenDialog] = React.useState(false);
     const [itemToDelete, setItemToDelete] = React.useState('');
     const [listState, setListState] = React.useState('customerlist')
 
+    const [openDialog, setOpenDialog] = React.useState(false);
     const handleDialog = () => {
         setOpenDialog(!openDialog)
     }

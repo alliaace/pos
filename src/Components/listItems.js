@@ -36,6 +36,7 @@ export default function NestedList() {
     const [supplier, setSupplier] = React.useState(true);
     const [stock, setStock] = React.useState(true);
     const [invoice, setInvoice] = React.useState(true);
+    const [suite, setSuite] = React.useState(true);
 
     const handleClickCustomer = () => {
         setCustomer(!customer);
@@ -48,6 +49,9 @@ export default function NestedList() {
     };
     const handleClickInvoice = () => {
         setInvoice(!invoice);
+    };
+    const handleClickSuite = () => {
+        setSuite(!suite);
     };
 
 
@@ -75,6 +79,11 @@ export default function NestedList() {
 
 
 
+
+
+
+
+
             <ListItem button onClick={handleClickInvoice}>
                 <ListItemIcon>
                     <ShowChartIcon style={{ color: '#f5f5f5' }} />
@@ -84,7 +93,7 @@ export default function NestedList() {
             </ListItem>
             <Collapse in={invoice} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    <ListItem button className={classes.nested} onClick={() => window.location = '/invoice'}>
+                    <ListItem button className={classes.nested} onClick={() => window.location = '/manageinvoice'}>
                         <ListItemIcon>
                             <ListIcon style={{ color: '#f5f5f5' }} />
                         </ListItemIcon>
@@ -101,6 +110,37 @@ export default function NestedList() {
             </Collapse>
 
 
+
+            <ListItem button onClick={handleClickSuite}>
+                <ListItemIcon>
+                    <ShowChartIcon style={{ color: '#f5f5f5' }} />
+                </ListItemIcon>
+                <ListItemText primary="SUITE" />
+                {suite ? <ExpandLess /> : <ExpandMore />}
+            </ListItem>
+            <Collapse in={suite} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                    <ListItem button className={classes.nested} onClick={() => window.location = '/addcategory'}>
+                        <ListItemIcon>
+                            <ListIcon style={{ color: '#f5f5f5' }} />
+                        </ListItemIcon>
+                        <ListItemText primary="Category" />
+                    </ListItem>
+                    <ListItem button className={classes.nested} onClick={() => window.location = '/manageproduct'}>
+                        <ListItemIcon>
+                            <ListIcon style={{ color: '#f5f5f5' }} />
+                        </ListItemIcon>
+                        <ListItemText primary="Manage Product" />
+                    </ListItem>
+                    <ListItem button className={classes.nested} onClick={() => window.location = '/addproduct'}>
+                        <ListItemIcon>
+                            <AddIcon style={{ color: 'f5f5f5' }} />
+                        </ListItemIcon>
+                        <ListItemText primary="Add Product" />
+                    </ListItem>
+
+                </List>
+            </Collapse>
 
 
             <ListItem button onClick={handleClickCustomer}>
