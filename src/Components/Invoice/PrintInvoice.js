@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
 import AppBar from '@material-ui/core/AppBar';
-import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router';
 
 import { Container, Grid } from '@material-ui/core';
 import ReactToPrint from "react-to-print";
@@ -100,59 +100,65 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-function createData(si, item, qty, rate, amount) {
-    return { si, item, qty, rate, amount };
-}
 
-const rows = [
-    createData(1, "Adx(RT)", 1000, 2700, 270000),
-    // createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    // createData('Eclair', 262, 16.0, 24, 6.0),
-    // createData('Cupcake', 305, 3.7, 67, 4.3),
-    // createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
 
-function DenseTable() {
+function DenseTable(props) {
+    function createData(si, item, qty, rate, amount) {
+        return { si, item, qty, rate, amount };
+    }
     const classes = useStyles();
+    const history = useHistory()
+    const [rows, setRows] = useState([])
+
+    useEffect(() => {
+        let temp = [
+            createData(1, props.data.name, props.data.quantity, props.data.price, props.data.grand_total)
+        ]
+        setRows(temp)
+    }, [])
 
     return (
-
-        <TableContainer component={Paper}>
-            <Grid item xs={12}>
-                <Table className={classes.table} size="small" aria-label="a dense table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>SI</TableCell>
-                            <TableCell align="right">Item</TableCell>
-                            <TableCell align="right">QTY SUTE</TableCell>
-                            <TableCell align="right">Rate</TableCell>
-                            <TableCell align="right">Amount</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {rows.map((row) => (
-                            <TableRow key={row.si}>
-                                <TableCell component="th" scope="row">
-                                    {row.si}
-                                </TableCell>
-                                <TableCell align="right">{row.item}</TableCell>
-                                <TableCell align="right">{row.qty}</TableCell>
-                                <TableCell align="right">{row.rate}</TableCell>
-                                <TableCell align="right">{row.amount}</TableCell>
+        <>
+            {/* {JSON.stringify(props.data)} */}
+            <TableContainer component={Paper}>
+                <Grid item xs={12}>
+                    <Table className={classes.table} size="small" aria-label="a dense table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>SI</TableCell>
+                                <TableCell align="right">Item</TableCell>
+                                <TableCell align="right">QTY SUTE</TableCell>
+                                <TableCell align="right">Rate</TableCell>
+                                <TableCell align="right">Amount</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </Grid>
-        </TableContainer>
+                        </TableHead>
+                        <TableBody>
+                            {rows.map((row) => (
+                                <TableRow key={row.si}>
+                                    <TableCell component="th" scope="row">
+                                        {row.si}
+                                    </TableCell>
+                                    <TableCell align="right">{row.item}</TableCell>
+                                    <TableCell align="right">{row.qty}</TableCell>
+                                    <TableCell align="right">{row.rate}</TableCell>
+                                    <TableCell align="right">{row.amount}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </Grid>
+            </TableContainer>
+        </>
     );
 }
 
 
 class ComponentToPrint extends React.Component {
     render() {
+        var data = this.props.data
         return (
-            <Grid container spacing={3}>
+            <Grid container spacing={3} style={{ marginTop: 100 }}>
+
 
                 <Grid item xs={12}  >
                     <div style={{ lineHeight: 0, padding: '0 10px 10px 10px' }}>
@@ -167,7 +173,7 @@ class ComponentToPrint extends React.Component {
                             <p style={{ fontSize: 18 }}>0171123567</p>
                         </div>
                         <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 1 }}>Sell No: 1894</p>
-                        <DenseTable />
+                        <DenseTable data={data} />
                         <hr style={{ height: 2, border: 'none', backgroundColor: 'black' }} />
                         <div style={{ height: 20, marginBottom: 16 }}>
 
@@ -181,18 +187,18 @@ class ComponentToPrint extends React.Component {
                                 float: 'right',
                                 // display: 'inline',
 
-                            }}>$27000000</p>
+                            }}>{data.grand_total}</p>
                         </div>
 
                         <hr style={{ height: 2, border: 'none', backgroundColor: 'black' }} />
                         <div style={{ height: 20, marginBottom: 20 }}>
                             <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'left' }}>Grand Total</p>
-                            <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'right' }}>$270000</p>
+                            <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'right' }}>{data.grand_total}</p>
                         </div>
                         <hr style={{ height: 2, border: 'none', backgroundColor: 'black' }} />
                         <div style={{ height: 20, marginBottom: 30 }}>
                             <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'left' }}>Due</p>
-                            <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'right' }}>$270000</p>
+                            <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'right' }}>0</p>
                         </div>
                         <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0 }}>Powered By: Umdah</p>
 
@@ -208,15 +214,17 @@ class ComponentToPrint extends React.Component {
 
 
 export default class EnhancedTable extends React.Component {
-    // history = useHistory()
+
     // classes = useStyles();
 
     render() {
+        // const { name, price, quantity, grand_total } = this.props.history.location.state;
 
         return (
             <div
             // className={this.classes.root} 
             >
+                {/* {JSON.stringify(this.props.history.location.state)} */}
 
                 <Paper
                 // className={this.classes.paper}
@@ -233,7 +241,7 @@ export default class EnhancedTable extends React.Component {
                                 <Paper>
 
                                     <div style={{}}>
-                                        <ComponentToPrint ref={(el) => (this.componentRef = el)} />
+                                        <ComponentToPrint ref={(el) => (this.componentRef = el)} data={this.props.history.location.state} />
                                         <ReactToPrint
                                             trigger={() =>
                                                 <Button

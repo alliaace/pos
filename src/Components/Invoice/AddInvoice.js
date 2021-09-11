@@ -5,6 +5,7 @@ import InputField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import api from '../../api/api';
 import Toast from '../Toast/toast'
+import { useHistory } from 'react-router';
 
 export default function AddInvoice() {
     const [allProducts, setAllProducts] = useState([])
@@ -20,7 +21,7 @@ export default function AddInvoice() {
     const [toast, setToast] = useState(false)
     const [title, setTitle] = useState('')
     const [type, setType] = useState('success')
-
+    const history = useHistory()
 
     useEffect(async () => {
         const res = await api.get('stock/get_all')
@@ -49,7 +50,7 @@ export default function AddInvoice() {
                 setToast(true)
                 setType('success')
                 setTitle('Added Succesfully')
-                alert(JSON.stringify(res.data))
+                history.push({ pathname: '/invoice', state: { name: selectedProduct.product_name, price, quantity: selectedCartons, grand_total: total - discount } })
             }
             else {
 
@@ -57,7 +58,7 @@ export default function AddInvoice() {
                 setToast(true)
                 setType('error')
                 setTitle(res.data.message)
-                // alert(JSON.stringify(res.data))
+
             }
         } catch (error) {
             // alert('i')
@@ -66,7 +67,7 @@ export default function AddInvoice() {
     }
     return (
         <>
-            {/* {JSON.stringify(toast)} */}
+
             {toast &&
 
                 <Toast open={true} title={title} type={type} />
