@@ -59,11 +59,11 @@ export default function NestedList() {
         <List
             component="nav"
             aria-labelledby="nested-list-subheader"
-            subheader={
-                <ListSubheader component="div" id="nested-list-subheader" >
-                    <h1 ><a href='/' style={{ color: '#f5f5f5', textDecoration: 'none' }}>Dashboard</a></h1>
-                </ListSubheader>
-            }
+            // subheader={
+            //     <ListSubheader component="div" id="nested-list-subheader" >
+            //         <h1 ><a href='/' style={{ color: '#f5f5f5', textDecoration: 'none' }}>Dashboard</a></h1>
+            //     </ListSubheader>
+            // }
             style={{ backgroundColor: '#003366', color: '#f5f5f5' }}
 
             className={classes.root}
@@ -84,6 +84,13 @@ export default function NestedList() {
 
 
 
+            <ListItem button onClick={() => history.push('/')}>
+                <ListItemIcon>
+                    <ShowChartIcon style={{ color: '#f5f5f5' }} />
+                </ListItemIcon>
+                <ListItemText primary="Dasboard" />
+
+            </ListItem>
             <ListItem button onClick={handleClickInvoice}>
                 <ListItemIcon>
                     <ShowChartIcon style={{ color: '#f5f5f5' }} />

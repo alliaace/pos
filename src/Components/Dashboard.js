@@ -206,7 +206,7 @@ export default function Dashboard() {
                 </Toolbar>
             </AppBar>
             <Drawer
-                variant="permanent"
+                variant="persistent"
                 classes={{
                     paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
                 }}

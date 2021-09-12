@@ -10,6 +10,10 @@ import Paper from '@material-ui/core/Paper';
 import api from '../../api/api';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Divider } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 const useStyles = makeStyles({
     table: {
@@ -26,6 +30,18 @@ function createData(id, sellno, name, date, amount, actions) {
 export default function BasicTable() {
     const classes = useStyles();
     const [rows, setRows] = useState([])
+    const [openDialog, setOpenDialog] = React.useState(false);
+    const [itemToDelete, setItemToDelete] = React.useState('');
+    const handleDialog = () => {
+        setOpenDialog(!openDialog)
+    }
+    const DeleteItem = async () => {
+        var res = null;
+        res = await api.delete(`invoice/delete/${itemToDelete}`)
+        // alert(JSON.stringify(res.data))
+        handleDialog()
+        window.location.reload()
+    }
     useEffect(async () => {
         const res = await api.get('invoice/get_all')
         if (res.data.data) {
@@ -53,22 +69,52 @@ export default function BasicTable() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row) => (
+                    {rows.map((row, index) => (
                         <TableRow key={row.id}>
                             <TableCell component="th" scope="row">
-                                {row.id}
+                                {index + 1}
                             </TableCell>
                             <TableCell >{row.sellno}</TableCell>
                             <TableCell >{row.name}</TableCell>
-                            <TableCell >{row.date}</TableCell>
+                            <TableCell >{row.date.split('T')[0]}</TableCell>
                             <TableCell >{row.amount}</TableCell>
-                            <TableCell ></TableCell>
+                            <TableCell >
+                                {/* <span onClick={() => history.push({ pathname: 'editcustomer', state: { id: row.Id } })}> */}
+                                {/* <span onClick={() => history.push({ pathname: history.location.pathname == '/customerlist' ? 'editcustomer' : 'editsupplier', state: { id: row.Id } })}>
+                                            <EditIcon style={{ color: '#003366', cursor: 'pointer' }} />
+                                        </span> */}
+                                <span
+                                    onClick={() => {
+                                        handleDialog();
+                                        setItemToDelete(row.Id)
+                                    }}
+                                >
+                                    <DeleteIcon style={{ color: 'red', marginLeft: 10, cursor: 'pointer' }} />
+                                </span>
+                            </TableCell>
 
                         </TableRow>
                     ))}
                 </TableBody>
             </Table>
         </TableContainer>
+        <Dialog
+            open={openDialog}
+            onClose={handleDialog}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+        >
+            <DialogTitle id="alert-dialog-title">{"Are you sure to delete?"}</DialogTitle>
+
+            <DialogActions>
+                <Button onClick={handleDialog} color="primary">
+                    Cancel
+                </Button>
+                <Button onClick={DeleteItem} style={{ color: 'red' }} autoFocus>
+                    Yes
+                </Button>
+            </DialogActions>
+        </Dialog>
     </>
     );
 }

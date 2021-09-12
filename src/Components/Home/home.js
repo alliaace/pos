@@ -40,15 +40,15 @@ export default function Home() {
             <Container>
 
                 <Grid container spacing={3}>
-                    <Grid item xs={3} ><CountCard countCard={true} title="Total Customer" count={totalCustomers} icon={<img src="./images/customer.png" width={60} />} /></Grid>
-                    <Grid item xs={3} ><CountCard countCard={true} title="Total Product" count={totalStock} icon={<img src="./images/products-icon-3.png" width={60} />} /></Grid>
-                    <Grid item xs={3} ><CountCard countCard={true} title="Total Supplier" count={totalSuppliers} icon={<img src="./images/supplier.png" width={60} />} /></Grid>
-                    <Grid item xs={3} ><CountCard countCard={true} title="Total Invoice" count={totalInvoice} icon={<img src="./images/invoice.png" width={60} />} /></Grid>
+                    <Grid item xs={12} md={6} lg={3} ><CountCard countCard={true} title="Total Customer" count={totalCustomers} icon={<img src="./images/customer.png" width={60} />} /></Grid>
+                    <Grid item xs={12} md={6} lg={3} ><CountCard countCard={true} title="Total Product" count={totalStock} icon={<img src="./images/products-icon-3.png" width={60} />} /></Grid>
+                    <Grid item xs={12} md={6} lg={3} ><CountCard countCard={true} title="Total Supplier" count={totalSuppliers} icon={<img src="./images/supplier.png" width={60} />} /></Grid>
+                    <Grid item xs={12} md={6} lg={3} ><CountCard countCard={true} title="Total Invoice" count={totalInvoice} icon={<img src="./images/invoice.png" width={60} />} /></Grid>
 
-                    <Grid item xs={3} ><CountCard link='/invoice' title="Create POS Invoice" icon={<img src="./images/pos_invoice.png" width={40} />} /></Grid>
-                    <Grid item xs={3} ><CountCard link='/addstock' title="Add Product" icon={<img src="./images/product.png" width={40} />} /></Grid>
-                    <Grid item xs={3} ><CountCard link='/addcustomer' title="Add Customer" icon={<img src="./images/add_customer.png" width={40} />} /></Grid>
-                    <Grid item xs={3} ><CountCard link='/addsupplier' title="Add Supplier" icon={<img src="./images/supplier.png" width={60} />} /></Grid>
+                    <Grid item xs={12} md={6} lg={3} ><CountCard link='/invoice' title="Create POS Invoice" icon={<img src="./images/pos_invoice.png" width={40} />} /></Grid>
+                    <Grid item xs={12} md={6} lg={3} ><CountCard link='/addstock' title="Add Product" icon={<img src="./images/product.png" width={40} />} /></Grid>
+                    <Grid item xs={12} md={6} lg={3} ><CountCard link='/addcustomer' title="Add Customer" icon={<img src="./images/add_customer.png" width={40} />} /></Grid>
+                    <Grid item xs={12} md={6} lg={3} ><CountCard link='/addsupplier' title="Add Supplier" icon={<img src="./images/supplier.png" width={60} />} /></Grid>
 
                 </Grid>
             </Container>
