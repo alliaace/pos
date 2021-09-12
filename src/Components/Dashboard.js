@@ -92,6 +92,7 @@ const useStyles = makeStyles((theme) => ({
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.enteringScreen,
         }),
+        backgroundColor: '#003366'
     },
     drawerPaperClose: {
         overflowX: 'hidden',
@@ -211,7 +212,7 @@ export default function Dashboard() {
                     paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
                 }}
                 open={open}
-                style={{ backgroundColor: 'orange !important' }}
+            // style={{ backgroundColor: '' }}
             >
                 <div className={classes.toolbarIcon}
                     // onClick={() => window.location = '/'} 

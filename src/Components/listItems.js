@@ -32,11 +32,11 @@ const useStyles = makeStyles((theme) => ({
 export default function NestedList() {
     const classes = useStyles();
     const history = useHistory();
-    const [customer, setCustomer] = React.useState(true);
-    const [supplier, setSupplier] = React.useState(true);
-    const [stock, setStock] = React.useState(true);
-    const [invoice, setInvoice] = React.useState(true);
-    const [suite, setSuite] = React.useState(true);
+    const [customer, setCustomer] = React.useState(false);
+    const [supplier, setSupplier] = React.useState(false);
+    const [stock, setStock] = React.useState(false);
+    const [invoice, setInvoice] = React.useState(false);
+    const [suite, setSuite] = React.useState(false);
 
     const handleClickCustomer = () => {
         setCustomer(!customer);
