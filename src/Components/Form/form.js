@@ -15,7 +15,7 @@ import Icon from '@material-ui/core/Icon';
 import SaveIcon from '@material-ui/icons/Save';
 import { useHistory } from 'react-router-dom';
 import api from '../../api/api';
-
+import Toast from '../Toast/toast'
 
 
 
@@ -34,6 +34,8 @@ export default function Form() {
     const [PBalance, setPBalance] = useState('')
     const [state, setState] = useState('addcustomer')
     const [title, setTitle] = useState('Customer')
+    const [error, setError] = useState('All fileds must be filled')
+    const [open, setOpen] = useState(false)
     const getCustomer = async (id) => {
         try {
             // alert('this here ')
@@ -83,6 +85,7 @@ export default function Form() {
 
 
     const checkApiCall = () => {
+        setOpen(false)
         if (state == "addcustomer")
             addCustomer()
         else if (state == "editcustomer")
@@ -95,6 +98,10 @@ export default function Form() {
     }
 
     const addCustomer = async () => {
+        if (firstName == '' || email == '' || contact == '' || address == '' || PBalance == '') {
+            setOpen(true)
+            return
+        }
         const res = await api.post(`customer/add`, {
             customer_name: firstName,
             customer_email: email,
@@ -114,6 +121,10 @@ export default function Form() {
         }
     }
     const editCustomer = async () => {
+        if (firstName == '' || email == '' || contact == '' || address == '' || PBalance == '') {
+            setOpen(true)
+            return
+        }
         const res = await api.put(`customer/update/${history.location.state.id}`, {
             customer_name: firstName,
             customer_email: email,
@@ -135,6 +146,11 @@ export default function Form() {
     }
     const addSupplier = async () => {
         // alert('i am at add supplier')
+        if (firstName == '' || email == '' || contact == '' || address == '' || PBalance == '') {
+            setOpen(true)
+
+            return
+        }
         const res = await api.post(`supplier/add`, {
             supplier_name: firstName,
             supplier_email: email,
@@ -154,6 +170,12 @@ export default function Form() {
         }
     }
     const editSupplier = async () => {
+
+        if (firstName == '' || email == '' || contact == '' || address == '' || PBalance == '') {
+            setOpen(true)
+
+            return
+        }
         const res = await api.put(`supplier/update/${history.location.state.id}`, {
             supplier_name: firstName,
             supplier_email: email,
@@ -173,10 +195,18 @@ export default function Form() {
             );
         }
     }
+    setTimeout(() => {
+        setOpen(false)
+        // alert('called')
+    }, 5000);
 
     return (
         <React.Fragment>
+            {
+                open &&
 
+                <Toast open={true} title={error} type='error' />
+            }
             <Grid container xs={12} style={{ padding: '0 250px 0 200px', marginTop: 50 }}>
                 {/* <form onSubmit > */}
 
