@@ -197,7 +197,7 @@ export default function Form() {
 
 
                 <TextField
-                    // required
+                    required
                     id="email"
                     name="email"
                     label="Email"
@@ -208,7 +208,7 @@ export default function Form() {
                     style={{ height: 35, marginBottom: 10 }}
                 />
                 <TextField
-                    // required
+                    required
                     id="contact"
                     name="contact"
 
@@ -223,7 +223,7 @@ export default function Form() {
 
 
                 <TextField
-                    // required
+                    required
                     id="address1"
                     name="address1"
                     title={`${title} Address`}
@@ -238,6 +238,7 @@ export default function Form() {
 
 
                 <TextField
+                    required
                     id="PBalance"
                     name="PBalance"
                     title="Previous Balance"

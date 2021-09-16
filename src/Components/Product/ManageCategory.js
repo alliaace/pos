@@ -20,6 +20,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Bar from '../AppBar/AppBarComponent'
 
 const useStyles = makeStyles({
     table: {
@@ -88,14 +89,13 @@ export default function AddInvoice() {
     }
     return (
         <>
-
+            <Bar title="Add Category" link1="Dashboard" link2="Add Category" />
             {toast &&
 
                 <Toast open={true} title={title} type={type} />
             }
             <Container style={{ padding: '10px 10px 10px 10px', overflow: 'auto' }}>
-                <p style={{ fontSize: 18 }}>Category</p>
-                <Divider />
+
 
 
                 <Grid container xs={12} style={{ marginTop: 20 }}>

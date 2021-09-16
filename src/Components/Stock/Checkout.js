@@ -11,6 +11,7 @@ import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import Form from './form';
+import Bar from '../../Components/AppBar/AppBarComponent'
 
 import { useHistory } from 'react-router-dom';
 
@@ -63,13 +64,7 @@ export default function Checkout() {
     return (
         <React.Fragment>
             <CssBaseline />
-            <AppBar position="absolute" className={classes.appBar} >
-                <Toolbar>
-                    <Typography variant="h6" color="inherit" noWrap>
-                        Add Stock
-                    </Typography>
-                </Toolbar>
-            </AppBar>
+            <Bar title="Add Stock" link1="Dashboard" link2="Add Stock" />
 
             <Form />
 

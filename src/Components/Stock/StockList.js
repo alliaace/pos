@@ -21,14 +21,14 @@ import Switch from '@material-ui/core/Switch';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import api from '../../api/api';
 import EditIcon from '@material-ui/icons/Edit';
-import AppBar from '@material-ui/core/AppBar';
+
 import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
+import Bar from '../AppBar/AppBarComponent'
 
 
 function createData(Id, Product_Name, Supplier_Name, Buy_Date, Product_Per_Carton, Quantity, Buy_Price, Sale_Price, Action) {
@@ -108,81 +108,84 @@ export default function EnhancedTable() {
 
 
     return (
-        <div className={classes.root}>
+        <>
+            <Bar title="Stocks" link1="Dashboard" link2="Stock List" />
+            <div className={classes.root}>
 
-            <Paper className={classes.paper}>
+                <Paper className={classes.paper}>
 
 
 
-                <TableContainer component={Paper}>
-                    <Table className={classes.table} aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Id</TableCell>
-                                <TableCell>Product Name</TableCell>
-                                <TableCell>Supplier Name</TableCell>
-                                <TableCell>Buy Date</TableCell>
-                                <TableCell>Product per Carton</TableCell>
-                                <TableCell>Quantity</TableCell>
-                                <TableCell>Buy Price</TableCell>
-                                <TableCell>Sale Price</TableCell>
-                                <TableCell>Actions</TableCell>
+                    <TableContainer component={Paper}>
+                        <Table className={classes.table} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell>Id</TableCell>
+                                    <TableCell>Product Name</TableCell>
+                                    <TableCell>Supplier Name</TableCell>
+                                    <TableCell>Buy Date</TableCell>
+                                    <TableCell>Product per Carton</TableCell>
+                                    <TableCell>Quantity</TableCell>
+                                    <TableCell>Buy Price</TableCell>
+                                    <TableCell>Sale Price</TableCell>
+                                    <TableCell>Actions</TableCell>
 
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {rows.map((row, index) => (
-                                <TableRow key={row.name}>
-
-                                    <TableCell component="th" scope="row">
-                                        {index + 1}
-                                    </TableCell>
-                                    <TableCell >{row.Product_Name}</TableCell>
-                                    <TableCell >{row.Supplier_Name}</TableCell>
-                                    <TableCell >{row.Buy_Date.split('T')[0]}</TableCell>
-                                    <TableCell >{row.Product_Per_Carton}</TableCell>
-                                    <TableCell >{row.Quantity}</TableCell>
-                                    <TableCell >{row.Buy_Price}</TableCell>
-                                    <TableCell >{row.Sale_Price}</TableCell>
-                                    <TableCell >
-                                        {/* <span onClick={() => history.push({ pathname: 'editcustomer', state: { id: row.Id } })}> */}
-                                        <span onClick={() => history.push({ pathname: 'editstock', state: { id: row.Id } })}>
-                                            <EditIcon style={{ color: '#003366', cursor: 'pointer' }} />
-                                        </span>
-                                        <span
-                                            onClick={() => {
-                                                handleDialog();
-                                                setItemToDelete(row.Id)
-                                            }}
-                                        >
-                                            <DeleteIcon style={{ color: 'red', marginLeft: 10, cursor: 'pointer' }} />
-                                        </span>
-                                    </TableCell>
                                 </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                            </TableHead>
+                            <TableBody>
+                                {rows.map((row, index) => (
+                                    <TableRow key={row.name}>
 
-            </Paper>
+                                        <TableCell component="th" scope="row">
+                                            {index + 1}
+                                        </TableCell>
+                                        <TableCell >{row.Product_Name}</TableCell>
+                                        <TableCell >{row.Supplier_Name}</TableCell>
+                                        <TableCell >{row.Buy_Date.split('T')[0]}</TableCell>
+                                        <TableCell >{row.Product_Per_Carton}</TableCell>
+                                        <TableCell >{row.Quantity}</TableCell>
+                                        <TableCell >{row.Buy_Price}</TableCell>
+                                        <TableCell >{row.Sale_Price}</TableCell>
+                                        <TableCell >
+                                            {/* <span onClick={() => history.push({ pathname: 'editcustomer', state: { id: row.Id } })}> */}
+                                            <span onClick={() => history.push({ pathname: 'editstock', state: { id: row.Id } })}>
+                                                <EditIcon style={{ color: '#003366', cursor: 'pointer' }} />
+                                            </span>
+                                            <span
+                                                onClick={() => {
+                                                    handleDialog();
+                                                    setItemToDelete(row.Id)
+                                                }}
+                                            >
+                                                <DeleteIcon style={{ color: 'red', marginLeft: 10, cursor: 'pointer' }} />
+                                            </span>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
 
-            <Dialog
-                open={openDialog}
-                onClose={handleDialog}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">{"Are you sure to delete?"}</DialogTitle>
+                </Paper>
 
-                <DialogActions>
-                    <Button onClick={handleDialog} color="primary">
-                        Cancel
-                    </Button>
-                    <Button onClick={DeleteItem} style={{ color: 'red' }} autoFocus>
-                        Yes
-                    </Button>
-                </DialogActions>
-            </Dialog>
-        </div>
+                <Dialog
+                    open={openDialog}
+                    onClose={handleDialog}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">{"Are you sure to delete?"}</DialogTitle>
+
+                    <DialogActions>
+                        <Button onClick={handleDialog} color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={DeleteItem} style={{ color: 'red' }} autoFocus>
+                            Yes
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
+        </>
     );
 }

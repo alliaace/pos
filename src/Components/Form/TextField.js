@@ -22,11 +22,11 @@ export default function TextField(props) {
                         placeholder={props.placeholder}
                         value={props.value}
                         onChange={props.onChange}
-                        style={{ borderWidth: 0.1, width: '100%', height: 35, }}
+                        style={{ borderWidth: 0.1, width: '100%', height: 35, paddingLeft: 10 }}
                         type={props.inputType}
                     /> :
                     <textarea
-                        style={{ width: '100%', height: 70, }}
+                        style={{ width: '100%', height: 70, paddingLeft: 10 }}
                         required={props.required}
                         id={props.id}
                         name={props.name}

@@ -73,7 +73,7 @@ export default class PersonDetail extends Component {
 
         return (
             <>
-                <p style={{ fontSize: 18, marginLeft: 10, padding: "10px 0 10px 0" }}>Ldger
+                <p style={{ fontSize: 18, marginLeft: 10, padding: "10px 0 10px 0" }}>Ledger
                     <span style={{ float: 'right', marginRight: 10 }}>
 
                         <ReactToPrint

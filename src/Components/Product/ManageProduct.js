@@ -14,6 +14,7 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Bar from '../AppBar/AppBarComponent'
 
 const useStyles = makeStyles({
     table: {
@@ -58,8 +59,7 @@ export default function BasicTable() {
         }
     }, [])
     return (<>
-        <p style={{ fontSize: 18, marginLeft: 10, }}>Manage Product</p>
-        <Divider />
+        <Bar title="Category" link1="Dashboard" link2="Category List" />
         <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
                 <TableHead>
