@@ -34,7 +34,7 @@ export default function Form() {
     const [PBalance, setPBalance] = useState('')
     const [state, setState] = useState('addcustomer')
     const [title, setTitle] = useState('Customer')
-    const [error, setError] = useState('All fileds must be filled')
+    const [error, setError] = useState('Name and Contact Number must be filled')
     const [open, setOpen] = useState(false)
     const getCustomer = async (id) => {
         try {
@@ -57,6 +57,8 @@ export default function Form() {
             setFirstName(res.data.data.supplier_name)
             setAddress(res.data.data.address)
             setContact(res.data.data.contact_no)
+            setEmail(res.data.data.email)
+            setPBalance(res.data.data.previous_balance)
             // alert(JSON.stringify(res.data.data.customer_name))
         } catch (error) {
 
@@ -98,7 +100,7 @@ export default function Form() {
     }
 
     const addCustomer = async () => {
-        if (firstName == '' || email == '' || contact == '' || address == '' || PBalance == '') {
+        if (firstName == '' || contact == '') {
             setOpen(true)
             return
         }
@@ -111,7 +113,13 @@ export default function Form() {
         });
 
         if (res.status === 200) {
-            history.push("/customerlist");
+            if (!res.data.data) {
+                setError(res.data.message)
+                setOpen(true)
+            } else {
+                // alert(JSON.stringify(res.data.data))
+                history.push("/customerlist");
+            }
 
             // this.props.history.push("/customers");
         } else {
@@ -121,7 +129,7 @@ export default function Form() {
         }
     }
     const editCustomer = async () => {
-        if (firstName == '' || email == '' || contact == '' || address == '' || PBalance == '') {
+        if (firstName == '' || contact == '') {
             setOpen(true)
             return
         }
@@ -135,7 +143,8 @@ export default function Form() {
         // alert(JSON.stringify(res.data))
 
         if (res.status === 200) {
-            history.push("/customerlist");
+            alert(JSON.stringify(res.data))
+            // history.push("/customerlist");
 
             // this.props.history.push("/customers");
         } else {
@@ -146,7 +155,7 @@ export default function Form() {
     }
     const addSupplier = async () => {
         // alert('i am at add supplier')
-        if (firstName == '' || email == '' || contact == '' || address == '' || PBalance == '') {
+        if (firstName == '' || contact == '') {
             setOpen(true)
 
             return
@@ -160,9 +169,16 @@ export default function Form() {
         });
 
         if (res.status === 200) {
+            if (!res.data.data) {
+                setError(res.data.message)
+                setOpen(true)
+            } else {
+                // alert(JSON.stringify(res.data.data))
+                // history.push("/customerlist");
+                history.push("/supplierlist");
+            }
             // alert("Saved successfully");
             // alert(JSON.stringify(res.data))
-            history.push("/supplierlist");
         } else {
             throw new Error(
                 `Unable to create the record. The status code is ${res.status}`
@@ -171,11 +187,12 @@ export default function Form() {
     }
     const editSupplier = async () => {
 
-        if (firstName == '' || email == '' || contact == '' || address == '' || PBalance == '') {
+        if (firstName == '' || contact == '') {
             setOpen(true)
 
             return
         }
+        alert(PBalance)
         const res = await api.put(`supplier/update/${history.location.state.id}`, {
             supplier_name: firstName,
             supplier_email: email,
@@ -227,7 +244,7 @@ export default function Form() {
 
 
                 <TextField
-                    required
+                    // required
                     id="email"
                     name="email"
                     label="Email"
@@ -253,7 +270,7 @@ export default function Form() {
 
 
                 <TextField
-                    required
+                    // required
                     id="address1"
                     name="address1"
                     title={`${title} Address`}
@@ -268,7 +285,7 @@ export default function Form() {
 
 
                 <TextField
-                    required
+                    // required
                     id="PBalance"
                     name="PBalance"
                     title="Previous Balance"

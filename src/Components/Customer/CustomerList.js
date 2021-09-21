@@ -35,8 +35,8 @@ import Divider from '@material-ui/core/Divider'
 
 
 
-function createData(Id, Name, Address, Contact, Action) {
-    return { Id, Name, Address, Contact, Action };
+function createData(Id, Name, Address, Contact, PreviousBalnce, Action) {
+    return { Id, Name, Address, Contact, PreviousBalnce, Action };
 }
 
 var rows = [];
@@ -89,10 +89,10 @@ export default function EnhancedTable() {
             const res = await api.get('customer/get_all');
             // alert(JSON.stringify(res.data.data))
             if (res.data.data) {
-                // alert('here')
+                // alert(JSON.stringify(res.data.data))
                 rows = []
                 res.data.data.map(item =>
-                    rows.push(createData(item._id, item.customer_name, item.address, item.contact_no))
+                    rows.push(createData(item._id, item.customer_name, item.address, item.contact_no, item.previous_balance))
 
                 )
                 // alert(JSON.stringify(rows))
@@ -117,7 +117,7 @@ export default function EnhancedTable() {
                 // alert('here')
                 rows = []
                 res.data.data.map(item =>
-                    rows.push(createData(item._id, item.supplier_name, item.address, item.contact_no))
+                    rows.push(createData(item._id, item.supplier_name, item.address, item.contact_no, item.previous_balance))
 
                 )
                 // alert(JSON.stringify(rows))
@@ -171,6 +171,7 @@ export default function EnhancedTable() {
                                 <TableCell>Name</TableCell>
                                 <TableCell>Address</TableCell>
                                 <TableCell>Contact Number</TableCell>
+                                <TableCell>Previous Balance</TableCell>
 
                                 <TableCell>Actions</TableCell>
 
@@ -188,6 +189,7 @@ export default function EnhancedTable() {
                                     </TableCell>
                                     <TableCell >{row.Address}</TableCell>
                                     <TableCell >{row.Contact}</TableCell>
+                                    <TableCell >{row.PreviousBalnce}</TableCell>
                                     <TableCell >
                                         {/* <span onClick={() => history.push({ pathname: 'editcustomer', state: { id: row.Id } })}> */}
                                         <span onClick={() => history.push({ pathname: history.location.pathname == '/customerlist' ? 'editcustomer' : 'editsupplier', state: { id: row.Id } })}>
