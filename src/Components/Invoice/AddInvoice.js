@@ -9,6 +9,7 @@ import { useHistory } from 'react-router';
 
 export default function AddInvoice() {
     const [allProducts, setAllProducts] = useState([])
+    const [allCustomers, setAllCustomers] = useState([])
     const [selectedProduct, setSelectedProduct] = useState([])
     const [selectedProducts, setSelectedProducts] = useState([])
     const [CName, setCName] = useState('');
@@ -21,26 +22,62 @@ export default function AddInvoice() {
     const [toast, setToast] = useState(false)
     const [title, setTitle] = useState('')
     const [type, setType] = useState('success')
+    const [allItems, setAllItems] = useState([{ id: 1 }])
+    const [paidAmount, setPaidAmount] = useState(0)
+    const [grandTotal, setGrandTotal] = useState(0)
     const history = useHistory()
 
     useEffect(async () => {
         const res = await api.get('stock/get_all')
         if (res.data.data)
             setAllProducts(res.data.data)
+        const res1 = await api.get("customer/get_all")
+        if (res1.data.data)
+            setAllCustomers(res1.data.data)
     }, [])
+    const addItem = () => {
+        setAllItems(
+            [
+                ...allItems,
+                {
+                    product_id: selectedProduct._id,
+                    product_name: selectedProduct.product_name,
+                    carton: selectedCartons,
+                    sale_price: price,
+                    selectedProduct: selectedProduct.quantity,
+                    item: selectedProduct.product_per_carton,
+                    quantity: selectedCartons,
+                    price,
+                    total,
+                    discount
+                }
+            ]
+        )
+    }
 
     const handleSubmit = async () => {
-
+        let temp = []
+        allItems.map((item, index) => {
+            if (index != 0) {
+                temp.push({
+                    product_id: item.product_id,
+                    product_name: item.product_name,
+                    quantity: item.quantity,
+                    sale_price: item.sale_price
+                })
+            }
+        })
+        temp.push({
+            product_id: selectedProduct._id,
+            product_name: selectedProduct.product_name,
+            quantity: selectedCartons,
+            sale_price: price
+        })
         try {
             const res = await api.post('invoice/add', {
                 customer_name: CName,
                 date,
-                products: [{
-                    product_id: selectedProduct._id,
-                    product_name: selectedProduct.product_name,
-                    quantity: selectedCartons,
-                    sale_price: price
-                }],
+                products: temp,
                 grand_total: total - discount,
                 paid_amount: total - discount
             })
@@ -50,7 +87,10 @@ export default function AddInvoice() {
                 setToast(true)
                 setType('success')
                 setTitle('Added Succesfully')
-                history.push({ pathname: '/printinvoice', state: { name: selectedProduct.product_name, price, quantity: selectedCartons, grand_total: total - discount } })
+                // let temp = allItems
+                // temp.splice(0, 1)
+
+                history.push({ pathname: '/printinvoice', state: { allItems: temp, grand_total: grandTotal } })
             }
             else {
 
@@ -67,6 +107,9 @@ export default function AddInvoice() {
     }
     return (
         <>
+            {/* {JSON.stringify(allItems)} */}
+            {/* {console.log(allItems)} */}
+            {/* yahan {JSON.stringify(allItems[1]?.products[0]?.quantity)} */}
 
             {toast &&
 
@@ -79,24 +122,42 @@ export default function AddInvoice() {
                 <Grid container xs={12}>
 
                     <Grid container xs={6}>
-
-                        <TextField
-                            required
-                            id="customername"
-                            name="customername"
-                            label="Customer Name"
-                            fullWidth
-                            title='Customer Name'
-                            placeholder='Customer Name'
-                            autoComplete="given-name"
-                            variant="filled"
-                            style={{ height: 35, marginBottom: 10 }}
-                            onChange={(e) => setCName(e.target.value)}
+                        <Autocomplete
+                            id="combo-box-demo"
+                            options={allCustomers}
+                            getOptionLabel={(option) => option.customer_name}
+                            // style={{ marginTop: 10 }}
+                            onChange={(e, newValue) => {
+                                // alert((newValue.customer_name))
+                                setCName(newValue.customer_name)
+                            }}
+                            renderInput={(params) =>
+                                <>
+                                    <div ref={params.InputProps.ref} style={{}}>
+                                        {/* <TextField
+                                        required
+                                        id="customername"
+                                        name="customername"
+                                        label="Customer Name"
+                                        fullWidth
+                                        title='Customer Name'
+                                        placeholder='Customer Name'
+                                        autoComplete="given-name"
+                                        variant="filled"
+                                        style={{ height: 35, marginBottom: 10 }}
+                                        onChange={(e) => setCName(e.target.value)}
+                                        {...params.inputProps}
+                                    /> */}
+                                        Customer Name
+                                        <input style={{ height: 35, marginLeft: 48, width: 453 }} type="text" placeholder='Customer Name' {...params.inputProps} />
+                                    </div>
+                                </>
+                            }
                         />
                     </Grid>
                     <Grid container xs={6}>
 
-                        <Button>New Customer</Button>
+                        <Button onClick={() => history.push('/addcustomer')}>New Customer</Button>
                     </Grid>
 
 
@@ -142,67 +203,95 @@ export default function AddInvoice() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
+                            {allItems.map((item, index) =>
+                                <tr>
 
-                                <td style={{ width: '20%' }}>
-                                    <Autocomplete
-                                        id="combo-box-demo"
-                                        options={allProducts}
-                                        getOptionLabel={(option) => option.product_name}
-                                        // style={{ marginTop: 10 }}
-                                        onChange={(e, newValue) => {
-                                            setSelectedProduct(newValue)
-                                            setPrice(newValue ? newValue.sale_price : 0)
-                                            setTotal(newValue ? newValue.sale_price * selectedCartons : 0)
-                                        }}
-                                        renderInput={(params) =>
-                                            <div ref={params.InputProps.ref}>
-                                                <input style={{ height: 35 }} type="text" {...params.inputProps} />
-                                            </div>
-                                        }
-                                    />
-                                </td>
+                                    <td style={{ width: '20%' }}>
+                                        <Autocomplete
+                                            id="combo-box-demo"
+                                            options={allProducts}
+                                            getOptionLabel={(option) => option.product_name}
+                                            // style={{ marginTop: 10 }}
+                                            onChange={(e, newValue) => {
+                                                setSelectedProduct(newValue)
+                                                setPrice(newValue ? newValue.sale_price : 0)
+                                                let total = 0
+                                                allItems.map((item, index) => {
+                                                    if (index != 0)
+                                                        total += item.total
+                                                })
+                                                total += newValue ? newValue.sale_price * selectedCartons : 0
+                                                setGrandTotal(total)
+                                                setTotal(newValue ? newValue.sale_price * selectedCartons : 0)
+                                            }}
+                                            renderInput={(params) =>
+                                                <div ref={params.InputProps.ref}>
+                                                    <input style={{ height: 35 }} type="text" {...params.inputProps} />
+                                                </div>
+                                            }
+                                        />
+                                    </td>
 
-                                <td style={{ width: '10%' }}>
-                                    <input disabled style={{ width: '100%', height: 35 }} value={selectedProduct && selectedProduct.quantity} />
-                                </td>
-                                <td style={{ width: '10%' }}>
-                                    <input type='number' style={{ width: '100%', height: 35 }} value={selectedCartons} onChange={(e) => { e.target.value < 1 ? setSelectedCartons(1) : setSelectedCartons(e.target.value); setTotal(e.target.value * price) }} />
-                                </td>
-                                <td style={{ width: '10%' }}>
-                                    <input disabled style={{ width: '100%', height: 35 }} value={selectedProduct && selectedProduct.product_per_carton} />
-                                </td>
-                                <td style={{ width: '10%' }}>
-                                    <input disabled type='number' style={{ width: '100%', height: 35 }} value={selectedCartons} />
-                                </td>
-                                <td style={{ width: '10%' }}>
-                                    <input style={{ width: '100%', height: 35 }} value={price} onChange={e => { setPrice(e.target.value); setTotal(selectedCartons * e.target.value) }} />
-                                </td>
-                                <td style={{ width: '10%' }}>
-                                    <input type='number' style={{ width: '100%', height: 35 }} value={discount} onChange={e => setDiscount(e.target.value)} />
-                                </td>
-                                <td style={{ width: '10%' }}>
-                                    <input disabled type='number' style={{ width: '100%', height: 35 }} value={total} />
-                                </td>
-                                <td style={{ width: '10%' }}>
-                                    <Button
-                                        variant="contained"
-                                        // color="danger"
-                                        size="small"
-                                        // className={classes.button}
-                                        // startIcon={<SaveIcon />}
-                                        style={{
-                                            marginLeft: 10,
-                                            backgroundColor: 'red',
-                                            color: 'white'
+                                    <td style={{ width: '10%' }}>
+                                        <input disabled style={{ width: '100%', height: 35 }} value={selectedProduct && allItems[index + 1]?.selectedProduct ? allItems[index + 1]?.selectedProduct : selectedProduct.quantity} />
+                                    </td>
+                                    <td style={{ width: '10%' }}>
 
-                                        }}
-                                    // onClick={() => window.location = '/addcustomer'}
-                                    >
-                                        Delete
-                                    </Button>
-                                </td>
-                            </tr>
+                                        <input type='number' style={{ width: '100%', height: 35 }} value={allItems[index + 1]?.carton ? allItems[index + 1]?.carton : selectedCartons} onChange={(e) => { e.target.value < 1 ? setSelectedCartons(1) : setSelectedCartons(e.target.value); setTotal(e.target.value * price) }} />
+                                    </td>
+                                    <td style={{ width: '10%' }}>
+                                        <input disabled style={{ width: '100%', height: 35 }} value={selectedProduct && allItems[index + 1]?.item ? allItems[index + 1]?.item : selectedProduct.product_per_carton} />
+                                    </td>
+                                    <td style={{ width: '10%' }}>
+                                        <input disabled type='number' style={{ width: '100%', height: 35 }} value={allItems[index + 1]?.quantity ? allItems[index + 1]?.quantity : selectedCartons} />
+                                    </td>
+                                    <td style={{ width: '10%' }}>
+
+                                        <input style={{ width: '100%', height: 35 }} value={allItems[index + 1]?.price ? allItems[index + 1]?.price : price} onChange={e => {
+                                            // alert('here')
+                                            setPrice(e.target.value);
+                                            let total1 = 0
+                                            let discount1 = 0
+                                            allItems.map((x, index) => {
+                                                // alert(x)
+                                                if (index != 0) {
+
+                                                    total1 = x.total
+                                                    discount1 = x.discount
+                                                }
+                                            })
+                                            total1 += (selectedCartons * e.target.value)
+                                            // alert(total1)
+                                            setGrandTotal(total1)
+                                            setTotal((selectedCartons * e.target.value))
+                                        }} />
+                                    </td>
+                                    <td style={{ width: '10%' }}>
+                                        <input type='number' style={{ width: '100%', height: 35 }} value={allItems[0]?.discount ? allItems[0]?.discount : discount} onChange={e => setDiscount(e.target.value)} />
+                                    </td>
+                                    <td style={{ width: '10%' }}>
+                                        <input disabled type='number' style={{ width: '100%', height: 35 }} value={allItems[index + 1]?.total ? allItems[index + 1]?.total : total} />
+                                    </td>
+                                    <td style={{ width: '10%' }}>
+                                        <Button
+                                            variant="contained"
+                                            // color="danger"
+                                            size="small"
+                                            // className={classes.button}
+                                            // startIcon={<SaveIcon />}
+                                            style={{
+                                                marginLeft: 10,
+                                                backgroundColor: 'red',
+                                                color: 'white'
+
+                                            }}
+                                        // onClick={() => window.location = '/addcustomer'}
+                                        >
+                                            Delete
+                                        </Button>
+                                    </td>
+                                </tr>
+                            )}
 
                         </tbody>
                     </table>
@@ -216,10 +305,65 @@ export default function AddInvoice() {
                                     <input disabled value={discount} />
                                 </th>
                             </tr>
+
+
                             <tr>
-                                <th scope="row" style={{ width: '80%' }}><p style={{ float: 'right' }}>Grand Total</p></th>
+                                {/* <th scope="row" style={{ width: '20%' }}>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        size="small"
+                                        // className={classes.button}
+                                        // startIcon={<SaveIcon />}
+                                        style={{
+                                            marginLeft: 10,
+                                            backgroundColor: '#003366'
+                                        }}
+                                        onClick={(e) => addItem()}
+                                    >
+                                        Add Item
+                                    </Button>
+                                    {/* <p style={{ float: 'left' }}></p> */}
+                                {/* </th> */}
+                                <th scope="row" style={{ width: '80%' }}><p style={{ float: 'right' }}>Paid Amount</p></th>
                                 <th scope="row" style={{ width: '20%' }}>
-                                    <input disabled value={total - discount} />
+                                    <input value={paidAmount} onChange={e => setPaidAmount(e.target.value)} type="number" />
+                                </th>
+                            </tr>
+
+
+
+
+
+
+
+
+                            <tr>
+                                <th scope="row" style={{ width: '20%' }}>
+                                    <Button
+                                        variant="contained"
+                                        color="primary"
+                                        size="small"
+                                        // className={classes.button}
+                                        // startIcon={<SaveIcon />}
+                                        style={{
+                                            marginLeft: 10,
+                                            backgroundColor: '#003366'
+                                        }}
+                                        onClick={(e) => addItem()}
+                                    >
+                                        Add Item
+                                    </Button>
+                                    {/* <p style={{ float: 'left' }}></p> */}
+                                    <p style={{ float: 'right' }}>Grand Total</p>
+                                </th>
+                                {/* <th scope="row" style={{ width: '60%' }}>
+                                    </th> */}
+                                <th scope="row" style={{ width: '20%' }}>
+                                    <input disabled value={
+                                        grandTotal - discount
+
+                                    } />
                                 </th>
                             </tr>
 

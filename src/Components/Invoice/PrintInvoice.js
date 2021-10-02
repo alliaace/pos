@@ -112,14 +112,20 @@ function DenseTable(props) {
 
     useEffect(() => {
         let temp = [
-            createData(1, props.data.name, props.data.quantity, props.data.price, props.data.grand_total)
         ]
+        props.data.allItems.map((x, index) => {
+            temp.push(
+
+                createData(index + 1, x.product_name, x.quantity, x.sale_price, x.sale_price * x.quantity)
+            )
+        })
         setRows(temp)
     }, [])
 
     return (
         <>
-            {/* {JSON.stringify(props.data)} */}
+            {/* {JSON.stringify(props.data.allItems)}
+            {console.log(props.data.allItems[0])} */}
             <TableContainer component={Paper}>
                 <Grid item xs={12}>
                     <Table className={classes.table} size="small" aria-label="a dense table">
