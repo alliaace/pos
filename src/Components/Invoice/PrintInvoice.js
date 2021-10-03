@@ -114,9 +114,10 @@ function DenseTable(props) {
         let temp = [
         ]
         props.data.allItems.map((x, index) => {
+            // alert(JSON.stringify(x))
             temp.push(
 
-                createData(index + 1, x.product_name, x.quantity, x.sale_price, x.sale_price * x.quantity)
+                createData(index + 1, x.product_name, x.quantity, x.sale_price, x.total)
             )
         })
         setRows(temp)
@@ -193,13 +194,18 @@ class ComponentToPrint extends React.Component {
                                 float: 'right',
                                 // display: 'inline',
 
-                            }}>{data.grand_total}</p>
+                            }}>{data.grand_total + 5}</p>
                         </div>
 
                         <hr style={{ height: 2, border: 'none', backgroundColor: 'black' }} />
                         <div style={{ height: 20, marginBottom: 20 }}>
+                            <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'left' }}>Total Discount</p>
+                            <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'right' }}>{data.totalDiscount}</p>
+                        </div>
+                        <hr style={{ height: 2, border: 'none', backgroundColor: 'black' }} />
+                        <div style={{ height: 20, marginBottom: 20 }}>
                             <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'left' }}>Grand Total</p>
-                            <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'right' }}>{data.grand_total}</p>
+                            <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'right' }}>{(data.grand_total + 5) - data.totalDiscount}</p>
                         </div>
                         <hr style={{ height: 2, border: 'none', backgroundColor: 'black' }} />
                         <div style={{ height: 20, marginBottom: 30 }}>

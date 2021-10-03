@@ -35,6 +35,7 @@ class ComponentToPrint extends React.Component {
                     <p style={{ fontSize: 14 }}>{type == "customer" ? "Customer" : "Supplier"} Name: {type == "customer" ? data.customer_name : data.supplier_name}</p>
                     <p style={{ fontSize: 14 }}>{type == "customer" ? "Customer" : "Supplier"} Address: {data.address}</p>
                     <p style={{ fontSize: 14 }}>Mobile: {data.contact_no}</p>
+                    <p style={{ fontSize: 14 }}>Previous Balance: {data.previous_balance}</p>
 
                 </Grid>
 

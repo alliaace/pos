@@ -11,7 +11,6 @@ export default function AddInvoice() {
     const [allProducts, setAllProducts] = useState([])
     const [allCustomers, setAllCustomers] = useState([])
     const [selectedProduct, setSelectedProduct] = useState([])
-    const [selectedProducts, setSelectedProducts] = useState([])
     const [CName, setCName] = useState('');
     const [date, setDate] = useState(null);
     const [PName, setPName] = useState('');
@@ -25,6 +24,7 @@ export default function AddInvoice() {
     const [allItems, setAllItems] = useState([{ id: 1 }])
     const [paidAmount, setPaidAmount] = useState(0)
     const [grandTotal, setGrandTotal] = useState(0)
+    const [totalDiscount, setTotalDiscount] = useState(0)
     const history = useHistory()
 
     useEffect(async () => {
@@ -48,11 +48,16 @@ export default function AddInvoice() {
                     item: selectedProduct.product_per_carton,
                     quantity: selectedCartons,
                     price,
-                    total,
+                    total: total - discount,
                     discount
                 }
             ]
         )
+        setSelectedProduct([])
+        setSelectedCartons(1)
+        setPrice(null)
+        setTotal(0)
+        setDiscount(0)
     }
 
     const handleSubmit = async () => {
@@ -63,7 +68,7 @@ export default function AddInvoice() {
                     product_id: item.product_id,
                     product_name: item.product_name,
                     quantity: item.quantity,
-                    sale_price: item.sale_price
+                    sale_price: item.sale_price,
                 })
             }
         })
@@ -78,8 +83,8 @@ export default function AddInvoice() {
                 customer_name: CName,
                 date,
                 products: temp,
-                grand_total: total - discount,
-                paid_amount: total - discount
+                grand_total: grandTotal - totalDiscount,
+                paid_amount: paidAmount
             })
             if (res.data.data) {
 
@@ -89,8 +94,29 @@ export default function AddInvoice() {
                 setTitle('Added Succesfully')
                 // let temp = allItems
                 // temp.splice(0, 1)
+                let temp = []
+                allItems.map((item, index) => {
+                    if (index != 0) {
+                        temp.push({
+                            product_id: item.product_id,
+                            product_name: item.product_name,
+                            quantity: item.quantity,
+                            sale_price: item.sale_price,
+                            total: item.total,
+                            discount: item.discount
+                        })
+                    }
+                })
+                temp.push({
+                    product_id: selectedProduct._id,
+                    product_name: selectedProduct.product_name,
+                    quantity: selectedCartons,
+                    sale_price: price,
+                    total: total - discount,
+                    discount
+                })
 
-                history.push({ pathname: '/printinvoice', state: { allItems: temp, grand_total: grandTotal } })
+                history.push({ pathname: '/printinvoice', state: { allItems: temp, grand_total: grandTotal, totalDiscount } })
             }
             else {
 
@@ -108,6 +134,7 @@ export default function AddInvoice() {
     return (
         <>
             {/* {JSON.stringify(allItems)} */}
+            {/* {JSON.stringify(allItems.length)} */}
             {/* {console.log(allItems)} */}
             {/* yahan {JSON.stringify(allItems[1]?.products[0]?.quantity)} */}
 
@@ -236,41 +263,76 @@ export default function AddInvoice() {
                                         <input disabled style={{ width: '100%', height: 35 }} value={selectedProduct && allItems[index + 1]?.selectedProduct ? allItems[index + 1]?.selectedProduct : selectedProduct.quantity} />
                                     </td>
                                     <td style={{ width: '10%' }}>
+                                        {/* carton */}
+                                        <input type='number' style={{ width: '100%', height: 35 }} value={allItems[index + 1]?.carton ? allItems[index + 1]?.carton : selectedCartons} onChange={(e) => {
+                                            e.target.value < 1 ? setSelectedCartons(1) : setSelectedCartons(e.target.value); setTotal(e.target.value * price);
+                                            let total1 = 0;
+                                            let discount1 = 0;
+                                            allItems.map((x, index) => {
+                                                if (index != 0) {
+                                                    total1 += x.total
+                                                    discount1 += x.discount
+                                                }
+                                            })
+                                            total1 += e.target.value * price
+                                            setGrandTotal(total1)
 
-                                        <input type='number' style={{ width: '100%', height: 35 }} value={allItems[index + 1]?.carton ? allItems[index + 1]?.carton : selectedCartons} onChange={(e) => { e.target.value < 1 ? setSelectedCartons(1) : setSelectedCartons(e.target.value); setTotal(e.target.value * price) }} />
+                                        }} />
                                     </td>
                                     <td style={{ width: '10%' }}>
+
                                         <input disabled style={{ width: '100%', height: 35 }} value={selectedProduct && allItems[index + 1]?.item ? allItems[index + 1]?.item : selectedProduct.product_per_carton} />
                                     </td>
                                     <td style={{ width: '10%' }}>
                                         <input disabled type='number' style={{ width: '100%', height: 35 }} value={allItems[index + 1]?.quantity ? allItems[index + 1]?.quantity : selectedCartons} />
                                     </td>
                                     <td style={{ width: '10%' }}>
-
+                                        {/* rate */}
                                         <input style={{ width: '100%', height: 35 }} value={allItems[index + 1]?.price ? allItems[index + 1]?.price : price} onChange={e => {
                                             // alert('here')
                                             setPrice(e.target.value);
+                                            setTotal((selectedCartons * e.target.value))
                                             let total1 = 0
                                             let discount1 = 0
                                             allItems.map((x, index) => {
-                                                // alert(x)
                                                 if (index != 0) {
+                                                    // alert(JSON.stringify(x.total))
 
-                                                    total1 = x.total
-                                                    discount1 = x.discount
+                                                    total1 += x.total
+                                                    discount1 += x.discount
                                                 }
                                             })
                                             total1 += (selectedCartons * e.target.value)
+                                            // alert(selectedCartons * e.target.value)
                                             // alert(total1)
                                             setGrandTotal(total1)
-                                            setTotal((selectedCartons * e.target.value))
                                         }} />
                                     </td>
                                     <td style={{ width: '10%' }}>
-                                        <input type='number' style={{ width: '100%', height: 35 }} value={allItems[0]?.discount ? allItems[0]?.discount : discount} onChange={e => setDiscount(e.target.value)} />
+                                        {/* discpupnt */}
+                                        <input type='number' style={{ width: '100%', height: 35 }} value={typeof allItems[index + 1]?.discount != 'undefined' ? allItems[index + 1]?.discount : discount} onChange={e => {
+                                            setDiscount(e.target.value);
+                                            // setTotal(total - parseInt(e.target.value))
+                                            let total1 = 0
+                                            let discount1 = 0
+                                            allItems.map((x, index) => {
+                                                if (index != 0) {
+                                                    // alert(typeof (x.discount))
+
+                                                    total1 += x.total
+                                                    discount1 += parseInt(x.discount)
+                                                }
+                                            })
+                                            // alert(e.target.value)
+                                            discount1 += parseInt(e.target.value)
+                                            // alert(selectedCartons * e.target.value)
+                                            // alert(total1)
+                                            setTotalDiscount(discount1)
+                                            // setGrandTotal(grandTotal - discount1)
+                                        }} />
                                     </td>
                                     <td style={{ width: '10%' }}>
-                                        <input disabled type='number' style={{ width: '100%', height: 35 }} value={allItems[index + 1]?.total ? allItems[index + 1]?.total : total} />
+                                        <input disabled type='number' style={{ width: '100%', height: 35 }} value={allItems[index + 1]?.total ? allItems[index + 1]?.total : total - discount} />
                                     </td>
                                     <td style={{ width: '10%' }}>
                                         <Button
@@ -285,7 +347,12 @@ export default function AddInvoice() {
                                                 color: 'white'
 
                                             }}
-                                        // onClick={() => window.location = '/addcustomer'}
+                                            onClick={() => {
+                                                alert(index + 1)
+                                                let temp = allItems
+                                                temp.splice((index + 1), 1)
+                                                setAllItems(temp)
+                                            }}
                                         >
                                             Delete
                                         </Button>
@@ -302,7 +369,7 @@ export default function AddInvoice() {
                             <tr>
                                 <th scope="row" style={{ width: '80%' }}><p style={{ float: 'right' }}>Total Discount</p></th>
                                 <th scope="row" style={{ width: '20%' }}>
-                                    <input disabled value={discount} />
+                                    <input disabled value={totalDiscount} />
                                 </th>
                             </tr>
 
@@ -361,7 +428,7 @@ export default function AddInvoice() {
                                     </th> */}
                                 <th scope="row" style={{ width: '20%' }}>
                                     <input disabled value={
-                                        grandTotal - discount
+                                        grandTotal - totalDiscount
 
                                     } />
                                 </th>
