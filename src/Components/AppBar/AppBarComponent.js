@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import { Grid } from '@material-ui/core';
-
+import search from '../functions/search'
 
 
 
@@ -23,15 +23,24 @@ const useStyles = makeStyles((theme) => ({
 }));
 export default function AppBarComponent(props) {
     const classes = useStyles();
+
+
+    const searchQuery = (query) => {
+        props.setDataForSearch(search(query, props.data, props.from))
+        // alert(search(query, props.data, props.from).length)
+    }
     return (
         <React.Fragment>
             <AppBar position="absolute" className={classes.appBar} >
                 <Toolbar>
-                    <Grid xs={9}>
+                    <Grid xs={6}>
                         <Typography variant="h6" color="inherit" noWrap>
 
                             {props.title}
                         </Typography>
+                    </Grid>
+                    <Grid xs={3}>
+                        <input type='text' onChange={e => searchQuery(e.target.value)} placeholder="Search" />
                     </Grid>
                     <Breadcrumbs aria-label="breadcrumb" style={{ float: 'right' }}>
                         <Link color="inherit" href="/" >

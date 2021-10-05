@@ -64,11 +64,8 @@ const useStyles = makeStyles((theme) => ({
 export default function EnhancedTable() {
     const history = useHistory()
     const classes = useStyles();
-
-
-
-
     const [rows, setRows] = useState([])
+    const [allStock, setAllStock] = useState([])
 
     const [openDialog, setOpenDialog] = React.useState(false);
     const [itemToDelete, setItemToDelete] = React.useState('');
@@ -93,6 +90,7 @@ export default function EnhancedTable() {
                     temp.push(createData(item._id, item.product_name, item.supplier_name, item.buy_date, item.product_per_carton, item.quantity, item.buy_price, item.sale_price))
                 )
             setRows(temp)
+            setAllStock(res.data.data)
             // alert("i am row" + JSON.stringify(rows))
         } catch (error) {
             // alert(error)
@@ -104,12 +102,21 @@ export default function EnhancedTable() {
     }, [])
 
 
+    const setDataForSearch = (data) => {
+        var temp = []
+        data.map(item =>
+            temp.push(createData(item._id, item.product_name, item.supplier_name, item.buy_date, item.product_per_carton, item.quantity, item.buy_price, item.sale_price))
+        )
+        setRows(temp)
+    }
+
+
 
 
 
     return (
         <>
-            <Bar title="Stocks" link1="Dashboard" link2="Stock List" />
+            <Bar title="Stocks" link1="Dashboard" link2="Stock List" data={allStock} setDataForSearch={setDataForSearch} from='stock' />
             <div className={classes.root}>
 
                 <Paper className={classes.paper}>

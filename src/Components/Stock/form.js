@@ -34,6 +34,7 @@ export default function Form() {
     const [quantity, setQuantity] = useState(0)
     const [buyPrice, setBuyPrice] = useState(0)
     const [salePrice, setSalePrice] = useState(0)
+    const [paidAmount, setPaidAmount] = useState(0)
 
 
 
@@ -77,6 +78,7 @@ export default function Form() {
             quantity,
             buy_price: buyPrice,
             sale_price: salePrice,
+            paid_amount: paidAmount
 
         });
 
@@ -226,6 +228,19 @@ export default function Form() {
                     variant="filled"
                     value={salePrice}
                     onChange={(e) => setSalePrice(e.target.value)}
+                    style={{ height: 35, marginBottom: 10 }}
+                />
+                <TextField
+                    required
+                    id="paidamount"
+                    name="paidamount"
+                    title="Paid Amount"
+                    placeholder="Paid Amount"
+                    fullWidth
+                    // autoComplete="shipping postal-code"
+                    variant="filled"
+                    value={paidAmount}
+                    onChange={(e) => setPaidAmount(e.target.value)}
                     style={{ height: 35, marginBottom: 10 }}
                 />
                 {/* </Grid> */}

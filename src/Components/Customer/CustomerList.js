@@ -32,6 +32,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Alert from '../Toast/toast'
 import Divider from '@material-ui/core/Divider'
+import Bar from '../AppBar/AppBarComponent'
 
 
 
@@ -39,7 +40,7 @@ function createData(Id, Name, Address, Contact, PreviousBalnce, Action) {
     return { Id, Name, Address, Contact, PreviousBalnce, Action };
 }
 
-var rows = [];
+
 
 
 
@@ -73,6 +74,8 @@ export default function EnhancedTable() {
 
     const [itemToDelete, setItemToDelete] = React.useState('');
     const [userData, setUserData] = React.useState('');
+    const [allData, setAllData] = React.useState([]);
+    const [rows, setRows] = React.useState([]);
 
 
     const [openDialog, setOpenDialog] = React.useState(false);
@@ -90,11 +93,13 @@ export default function EnhancedTable() {
             // alert(JSON.stringify(res.data.data))
             if (res.data.data) {
                 // alert(JSON.stringify(res.data.data))
-                rows = []
+                var temp = []
                 res.data.data.map(item =>
-                    rows.push(createData(item._id, item.customer_name, item.address, item.contact_no, item.previous_balance))
+                    temp.push(createData(item._id, item.customer_name, item.address, item.contact_no, item.previous_balance))
 
                 )
+                setRows(temp)
+                setAllData(res.data.data)
                 // alert(JSON.stringify(rows))
 
 
@@ -115,11 +120,13 @@ export default function EnhancedTable() {
                 setUserData([])
             else {
                 // alert('here')
-                rows = []
+                let temp = []
                 res.data.data.map(item =>
-                    rows.push(createData(item._id, item.supplier_name, item.address, item.contact_no, item.previous_balance))
+                    temp.push(createData(item._id, item.supplier_name, item.address, item.contact_no, item.previous_balance))
 
                 )
+                setRows(temp)
+                setAllData(res.data.data)
                 // alert(JSON.stringify(rows))
 
 
@@ -151,11 +158,19 @@ export default function EnhancedTable() {
     }
 
 
-
+    const setDataForSearch = (data) => {
+        // alert(JSON.stringify(data.length))
+        let temp = []
+        data.map(item =>
+            temp.push(createData(item._id, item.customer_name ? item.customer_name : item.supplier_name, item.address, item.contact_no, item.previous_balance))
+        )
+        setRows(temp)
+    }
 
     return (<>
-        <p style={{ fontSize: 18, marginLeft: 10, }}>Manage {(history.location.pathname == '/customerlist') ? "Customer" : "Supplier"}</p>
-        <Divider />
+        <Bar title={(history.location.pathname == '/customerlist') ? "Customer" : "Supplier"} link1="Dashboard" link2="Stock List" data={allData} setDataForSearch={setDataForSearch} from='customer' />
+        {/* <p style={{ fontSize: 18, marginLeft: 10, }}>Manage {(history.location.pathname == '/customerlist') ? "Customer" : "Supplier"}</p>
+        <Divider /> */}
         <div className={classes.root}>
             <Paper className={classes.paper}>
                 <Alert />

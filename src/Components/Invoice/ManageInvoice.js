@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
+import Bar from '../AppBar/AppBarComponent'
 const useStyles = makeStyles({
     table: {
         minWidth: 650,
@@ -30,8 +30,10 @@ function createData(id, sellno, name, date, amount, actions) {
 export default function BasicTable() {
     const classes = useStyles();
     const [rows, setRows] = useState([])
+    const [allData, setAllData] = useState([])
     const [openDialog, setOpenDialog] = React.useState(false);
     const [itemToDelete, setItemToDelete] = React.useState('');
+
     const handleDialog = () => {
         setOpenDialog(!openDialog)
     }
@@ -51,10 +53,22 @@ export default function BasicTable() {
                 temp.push(createData(x._id, 1, x.customer_name, x.date, x.grand_total))
             })
             setRows(temp)
+            setAllData(res.data.data)
         }
     }, [])
+
+
+
+    const setDataForSearch = (data) => {
+        var temp = []
+        data.map(x =>
+            temp.push(createData(x._id, 1, x.customer_name, x.date, x.grand_total))
+        )
+        setRows(temp)
+    }
     return (<>
-        <p style={{ fontSize: 18, marginLeft: 10, }}>Manage Invoice</p>
+        <Bar title="Manage Invoice" link1="Dashboard" link2="Category List" data={allData} setDataForSearch={setDataForSearch} from='invoice' />
+        {/* <p style={{ fontSize: 18, marginLeft: 10, }}>Manage Invoice</p> */}
         <Divider />
         <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">

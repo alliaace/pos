@@ -31,6 +31,7 @@ function createData(id, barcode, product_name, details, category, product_per_ca
 export default function BasicTable() {
     const classes = useStyles();
     const [rows, setRows] = useState([])
+    const [allData, setAllData] = useState([])
 
 
 
@@ -56,10 +57,19 @@ export default function BasicTable() {
                 temp.push(createData(x._id, x.barcode, x.product_name, x.details, x.category, x.product_per_carton, x.sale_price, x.supplier_price, x.supplier_name))
             })
             setRows(temp)
+            setAllData(res.data.data)
         }
     }, [])
+
+    const setDataForSearch = (data) => {
+        var temp = []
+        data.map(x =>
+            temp.push(createData(x._id, x.barcode, x.product_name, x.details, x.category, x.product_per_carton, x.sale_price, x.supplier_price, x.supplier_name))
+        )
+        setRows(temp)
+    }
     return (<>
-        <Bar title="Category" link1="Dashboard" link2="Category List" />
+        <Bar title="Category" link1="Dashboard" link2="Category List" data={allData} setDataForSearch={setDataForSearch} from='cat' />
         <TableContainer component={Paper}>
             <Table className={classes.table} aria-label="simple table">
                 <TableHead>
