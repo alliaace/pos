@@ -164,86 +164,87 @@ function DenseTable(props) {
 }
 
 
-function ComponentToPrint() {
+class ComponentToPrint extends React.Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            allData: []
+        }
+    }
 
 
-    const [allData, setAllData] = useState([])
-    const history = useHistory()
-    useEffect(async () => {
+    async componentDidMount() {
         // alert(JSON.stringify(history.location.state.id))
         // alert(JSON.stringify(history.location.state.name))
-        const res = await api.get(`invoice/getAllInvoices/${history.location.state.name}`)
+        const res = await api.get(`invoice/getAllInvoices/${localStorage.getItem('name')}`)
         if (res.data.data) {
-            setAllData(res.data.data)
+            this.setState({ allData: res.data.data })
             // alert(JSON.stringify(res.data.data))
         }
-    }, [])
+    }
+    render() {
+        return (
+            <>
+                {/* {JSON.stringify(allData[0])} */}
+                {
+                    this.state.allData.map(data =>
+                        <Grid container spacing={3} style={{ marginTop: 100 }}>
+                            <Grid item xs={12}  >
+                                <div style={{ lineHeight: 0, padding: '0 10px 10px 10px' }}>
+                                    <div style={{ textAlign: 'center', }}>
+                                        <p style={{ fontSize: 32, fontWeight: 'bold' }}>Tech Lab</p>
+                                        <p style={{ fontSize: 18, lineHeight: 1 }}>Uttara</p>
+                                        <p style={{ fontSize: 18 }}>0171123567</p>
+                                        <hr style={{ height: 2, border: 'none', backgroundColor: 'black' }} />
+                                        <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 1 }}>IBNUSEENA Medicals Karma dubai</p>
+                                        <p style={{ fontSize: 18 }}>Karama shopping Complex Karama</p>
+                                        <p style={{ fontSize: 18, lineHeight: 1 }}>0171123567</p>
+                                        <p style={{ fontSize: 18 }}>0171123567</p>
+                                    </div>
+                                    <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 1 }}>Sell No: 1894</p>
+                                    <DenseTable data={data.products} />
+                                    <hr style={{ height: 2, border: 'none', backgroundColor: 'black' }} />
+                                    <div style={{ height: 20, marginBottom: 16 }}>
 
+                                        <p style={{
+                                            fontSize: 18,
+                                            float: 'left',
+                                            // display: 'inline'
+                                        }}>Total</p>
+                                        <p style={{
+                                            fontSize: 18,
+                                            float: 'right',
+                                            // display: 'inline',
 
-    return (
-        <>
-            {JSON.stringify(allData[0])}
-            {allData.map(data =>
-                <Grid container spacing={3} style={{ marginTop: 100 }}>
-                    <Grid item xs={12}  >
-                        <div style={{ lineHeight: 0, padding: '0 10px 10px 10px' }}>
-                            <div style={{ textAlign: 'center', }}>
-                                <p style={{ fontSize: 32, fontWeight: 'bold' }}>Tech Lab</p>
-                                <p style={{ fontSize: 18, lineHeight: 1 }}>Uttara</p>
-                                <p style={{ fontSize: 18 }}>0171123567</p>
-                                <hr style={{ height: 2, border: 'none', backgroundColor: 'black' }} />
-                                <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 1 }}>IBNUSEENA Medicals Karma dubai</p>
-                                <p style={{ fontSize: 18 }}>Karama shopping Complex Karama</p>
-                                <p style={{ fontSize: 18, lineHeight: 1 }}>0171123567</p>
-                                <p style={{ fontSize: 18 }}>0171123567</p>
-                            </div>
-                            <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 1 }}>Sell No: 1894</p>
-                            <DenseTable data={data.products} />
-                            <hr style={{ height: 2, border: 'none', backgroundColor: 'black' }} />
-                            <div style={{ height: 20, marginBottom: 16 }}>
+                                        }}>{data.grand_total + 5}</p>
+                                    </div>
 
-                                <p style={{
-                                    fontSize: 18,
-                                    float: 'left',
-                                    // display: 'inline'
-                                }}>Total</p>
-                                <p style={{
-                                    fontSize: 18,
-                                    float: 'right',
-                                    // display: 'inline',
-
-                                }}>{data.grand_total + 5}</p>
-                            </div>
-
-                            <hr style={{ height: 2, border: 'none', backgroundColor: 'black' }} />
-                            <div style={{ height: 20, marginBottom: 20 }}>
-                                <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'left' }}>Paid Amount</p>
-                                <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'right' }}>{data.paid_amount}</p>
-                            </div>
-                            <hr style={{ height: 2, border: 'none', backgroundColor: 'black' }} />
-                            <div style={{ height: 20, marginBottom: 20 }}>
-                                <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'left' }}>Grand Total</p>
-                                <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'right' }}>{data.grand_total}</p>
-                            </div>
-                            <hr style={{ height: 2, border: 'none', backgroundColor: 'black' }} />
-                            <div style={{ height: 20, marginBottom: 30 }}>
-                                <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'left' }}>Due</p>
-                                <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'right' }}>{data.grand_total - data.paid_amount}</p>
-                            </div>
-                            <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0 }}>Powered By: Umdah</p>
-
-
-                        </div>
-                    </Grid>
-
-
-                </Grid>
-            )}
-        </>
-    );
+                                    <hr style={{ height: 2, border: 'none', backgroundColor: 'black' }} />
+                                    <div style={{ height: 20, marginBottom: 20 }}>
+                                        <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'left' }}>Paid Amount</p>
+                                        <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'right' }}>{data.paid_amount}</p>
+                                    </div>
+                                    <hr style={{ height: 2, border: 'none', backgroundColor: 'black' }} />
+                                    <div style={{ height: 20, marginBottom: 20 }}>
+                                        <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'left' }}>Grand Total</p>
+                                        <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'right' }}>{data.grand_total}</p>
+                                    </div>
+                                    <hr style={{ height: 2, border: 'none', backgroundColor: 'black' }} />
+                                    <div style={{ height: 20, marginBottom: 30 }}>
+                                        <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'left' }}>Due</p>
+                                        <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'right' }}>{data.grand_total - data.paid_amount}</p>
+                                    </div>
+                                    <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0 }}>Powered By: Umdah</p>
+                                </div>
+                            </Grid>
+                        </Grid>
+                    )
+                }
+            </>
+        );
+    }
 }
-
-
 
 export default class EnhancedTable extends React.Component {
 
@@ -283,7 +284,7 @@ export default class EnhancedTable extends React.Component {
                                                     size="large"
                                                     // className={classes.button}
                                                     // startIcon={}
-                                                    onClick={() => window.location = '/addstock'}
+                                                    onClick={() => alert('wormign')}
                                                 >
                                                     <PrintIcon />
                                                 </Button>}

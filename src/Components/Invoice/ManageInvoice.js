@@ -91,7 +91,10 @@ export default function BasicTable() {
                                 {index + 1011}
                             </TableCell>
                             <TableCell >{row.sellno}</TableCell>
-                            <TableCell onClick={() => history.push({ pathname: `/allinvoicesof`, state: { id: row.id, name: row.name } })} style={{ color: 'blue', cursor: 'pointer' }}>
+                            <TableCell onClick={() => {
+                                localStorage.setItem('name', row.name)
+                                window.location = `/allinvoicesof`
+                            }} style={{ color: 'blue', cursor: 'pointer' }}>
                                 {row.name}
                             </TableCell>
                             <TableCell >{row.date.split('T')[0]}</TableCell>
