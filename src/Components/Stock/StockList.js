@@ -83,7 +83,7 @@ export default function EnhancedTable() {
         try {
 
             const res = await api.get('stock/get_all');
-            // alert(JSON.stringify(res.data.data))
+            // alert(JSON.stringify(res.data.data[0].paid_amount))
             var temp = []
             if (res.status == 200)
                 res.data.data.map(item =>
@@ -144,7 +144,7 @@ export default function EnhancedTable() {
                                     <TableRow key={row.name}>
 
                                         <TableCell component="th" scope="row">
-                                            {index + 1}
+                                            {index + 1011}
                                         </TableCell>
                                         <TableCell >{row.Product_Name}</TableCell>
                                         <TableCell >{row.Supplier_Name}</TableCell>

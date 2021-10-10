@@ -197,7 +197,7 @@ export default function EnhancedTable() {
                                 <TableRow key={row.name}>
 
                                     <TableCell component="th" scope="row">
-                                        {index + 1}
+                                        {index + 1011}
                                     </TableCell>
                                     <TableCell >
                                         <a href={`/detail?type=${history.location.pathname == '/customerlist' ? "customer" : "supplier"}&id=${row.Id}`} style={{ textDecoration: 'none' }}>{row.Name}</a>

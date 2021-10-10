@@ -91,7 +91,7 @@ export default function BasicTable() {
                     {rows.map((row, index) => (
                         <TableRow key={row.id}>
                             <TableCell component="th" scope="row">
-                                {index + 1}
+                                {index + 1011}
                             </TableCell>
                             <TableCell >{row.barcode}</TableCell>
                             <TableCell >{row.product_name}</TableCell>

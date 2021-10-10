@@ -194,7 +194,7 @@ class ComponentToPrint extends React.Component {
                                 float: 'right',
                                 // display: 'inline',
 
-                            }}>{data.grand_total + 5}</p>
+                            }}>{data.grand_total}</p>
                         </div>
 
                         <hr style={{ height: 2, border: 'none', backgroundColor: 'black' }} />
@@ -205,7 +205,7 @@ class ComponentToPrint extends React.Component {
                         <hr style={{ height: 2, border: 'none', backgroundColor: 'black' }} />
                         <div style={{ height: 20, marginBottom: 20 }}>
                             <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'left' }}>Grand Total</p>
-                            <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'right' }}>{(data.grand_total + 5) - data.totalDiscount}</p>
+                            <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'right' }}>{(data.grand_total) - data.totalDiscount}</p>
                         </div>
                         <hr style={{ height: 2, border: 'none', backgroundColor: 'black' }} />
                         <div style={{ height: 20, marginBottom: 30 }}>

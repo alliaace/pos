@@ -217,7 +217,7 @@ export default function AddInvoice() {
                             <tr>
 
                                 <td style={{ width: '15%' }}>
-                                    <input type='number' style={{ width: '100%', height: 35 }} value={productPerCarton} onChange={e => setProductPerCarton(e.target.value)} />
+                                    <input type='number' style={{ width: '100%', height: 35 }} value={productPerCarton} onChange={e => setProductPerCarton(e.target.value < 0 ? 0 : e.target.value)} />
 
                                 </td>
 
@@ -225,7 +225,7 @@ export default function AddInvoice() {
                                     <input style={{ width: '100%', height: 35 }} value={salePrice} onChange={e => setSalePrice(e.target.value)} />
                                 </td>
                                 <td style={{ width: '15%' }}>
-                                    <input type='number' style={{ width: '100%', height: 35 }} value={supplierPrice} onChange={(e) => { setSupplierPrice(e.target.value) }} />
+                                    <input type='number' style={{ width: '100%', height: 35 }} value={supplierPrice} onChange={(e) => { setSupplierPrice(e.target.value < 0 ? 0 : e.target.value) }} />
                                 </td>
                                 {/* <td style={{ width: '15%' }}>
                                     <input style={{ width: '100%', height: 35 }} value={model} onChange={e => setModel(e.target.value)} />
