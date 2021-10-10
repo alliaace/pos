@@ -12,6 +12,7 @@ import ManageCategory from '../Components/Product/ManageCategory'
 import ManageProduct from '../Components/Product/ManageProduct'
 import Manageinvoice from '../Components/Invoice/ManageInvoice'
 import PersonDetail from '../Components/PersonDetail/PersonDetail'
+import AllInvoices from '../Components/Invoice/AllInvoices'
 
 export default function App() {
     return (
@@ -43,11 +44,16 @@ export default function App() {
 
             <Route exact path="/addcategory" component={ManageCategory} />
             <Route exact path="/addproduct" component={AddProduct} />
+            <Route exact path="/editproduct" component={AddProduct} />
             <Route exact path="/manageproduct" component={ManageProduct} />
 
 
 
             <Route exact path="/detail" component={PersonDetail} />
+
+
+
+            <Route exact path="/allinvoicesof" component={AllInvoices} />
         </Switch>
     );
 }

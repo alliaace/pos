@@ -19,11 +19,6 @@ export default function AddInvoice() {
     const [model, setModel] = useState()
     const [category, setCategory] = useState()
     const [supplier_name, setSupplierName] = useState()
-
-
-
-
-
     const [toast, setToast] = useState(false)
     const [title, setTitle] = useState('')
     const [type, setType] = useState('success')
@@ -37,21 +32,48 @@ export default function AddInvoice() {
         const response = await api.get('supplier/get_all')
         if (response.data.data)
             setAllSupplier(response.data.data)
+        if (history.location.pathname == '/editproduct') {
+            // alert(JSON.stringify(history.location.state.id))
+            const productData = await api.get(`product/get/${history.location.state.id}`)
+            let data = productData.data.data
+            // alert(JSON.stringify(data))
+            setBarCode(data.barcode)
+            setProductName(data.product_name)
+            setDetail(data.details)
+            setCategory(data.category)
+            setProductPerCarton(data.product_per_carton)
+            setSalePrice(data.sale_price)
+            setSupplierName(data.supplier_name)
+            setSupplierPrice(data.supplier_price)
+        }
     }, [])
 
     const handleSubmit = async () => {
 
         try {
-            const res = await api.post('product/add', {
-                barcode: barCode,
-                product_name: productName,
-                details: detail,
-                category,
-                product_per_carton: productPerCarton,
-                supplier_name: supplier_name,
-                sale_price: salePrice,
-                supplier_price: supplierPrice
-            })
+            const res = null
+            if (history.location.pathname == '/editproduct')
+                res = await api.put(`product/update/${history.location.state.id}`, {
+                    barcode: barCode,
+                    product_name: productName,
+                    details: detail,
+                    category,
+                    product_per_carton: productPerCarton,
+                    supplier_name: supplier_name,
+                    sale_price: salePrice,
+                    supplier_price: supplierPrice
+                })
+            else
+                res = await api.post('product/add', {
+                    barcode: barCode,
+                    product_name: productName,
+                    details: detail,
+                    category,
+                    product_per_carton: productPerCarton,
+                    supplier_name: supplier_name,
+                    sale_price: salePrice,
+                    supplier_price: supplierPrice
+                })
             if (res.data.data) {
 
                 setToast(false)
@@ -98,6 +120,7 @@ export default function AddInvoice() {
                             placeholder='Barcode/QR-code'
                             autoComplete="given-name"
                             variant="filled"
+                            value={barCode}
                             style={{ height: 35, marginBottom: 10 }}
                             onChange={(e) => setBarCode(e.target.value)}
                         />
@@ -121,6 +144,7 @@ export default function AddInvoice() {
                             placeholder='Product Name'
                             autoComplete="given-name"
                             variant="filled"
+                            value={productName}
                             style={{ height: 35, marginBottom: 10 }}
                             inputType='text'
                             onChange={(e) => setProductName(e.target.value)}
@@ -139,6 +163,7 @@ export default function AddInvoice() {
                             placeholder='Detail'
                             autoComplete="given-name"
                             variant="filled"
+                            value={detail}
                             style={{ height: 35, marginBottom: 70 }}
                             type='textarea'
                             onChange={(e) => setDetail(e.target.value)}
@@ -153,6 +178,7 @@ export default function AddInvoice() {
 
                             <Autocomplete
                                 id="combo-box-demo"
+                                value={category}
                                 options={allCategory}
                                 getOptionLabel={(option) => option.category_name}
                                 // style={{ marginTop: 10 }}
@@ -182,7 +208,7 @@ export default function AddInvoice() {
                                 <th scope="col">Product Per Carton</th>
                                 <th scope="col">Sale Price</th>
                                 <th scope="col">Supplier Price</th>
-                                <th scope="col">Model</th>
+                                {/* <th scope="col">Model</th> */}
                                 <th scope="col">Supplier</th>
 
                             </tr>
@@ -201,12 +227,13 @@ export default function AddInvoice() {
                                 <td style={{ width: '15%' }}>
                                     <input type='number' style={{ width: '100%', height: 35 }} value={supplierPrice} onChange={(e) => { setSupplierPrice(e.target.value) }} />
                                 </td>
-                                <td style={{ width: '15%' }}>
+                                {/* <td style={{ width: '15%' }}>
                                     <input style={{ width: '100%', height: 35 }} value={model} onChange={e => setModel(e.target.value)} />
-                                </td>
+                                </td> */}
                                 <td style={{ width: '40%' }}>
                                     <Autocomplete
                                         id="combo-box-demo"
+                                        value={supplier_name}
                                         options={allSupplier}
                                         getOptionLabel={(option) => option.supplier_name}
                                         // style={{ marginTop: 10 }}

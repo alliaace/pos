@@ -15,7 +15,8 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Bar from '../AppBar/AppBarComponent'
-
+import EditIcon from '@material-ui/icons/Edit';
+import { useHistory } from 'react-router-dom';
 const useStyles = makeStyles({
     table: {
         minWidth: 650,
@@ -33,7 +34,7 @@ export default function BasicTable() {
     const [rows, setRows] = useState([])
     const [allData, setAllData] = useState([])
 
-
+    const history = useHistory()
 
     const [openDialog, setOpenDialog] = React.useState(false);
     const [itemToDelete, setItemToDelete] = React.useState('');
@@ -102,9 +103,9 @@ export default function BasicTable() {
                             <TableCell >{row.supplier_name}</TableCell>
                             <TableCell >
                                 {/* <span onClick={() => history.push({ pathname: 'editcustomer', state: { id: row.Id } })}> */}
-                                {/* <span onClick={() => history.push({ pathname: history.location.pathname == '/customerlist' ? 'editcustomer' : 'editsupplier', state: { id: row.Id } })}>
-                                            <EditIcon style={{ color: '#003366', cursor: 'pointer' }} />
-                                        </span> */}
+                                <span onClick={() => history.push({ pathname: '/editproduct', state: { id: row.id } })}>
+                                    <EditIcon style={{ color: '#003366', cursor: 'pointer' }} />
+                                </span>
                                 <span
                                     onClick={() => {
                                         handleDialog();

@@ -15,14 +15,15 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Bar from '../AppBar/AppBarComponent'
+import { useHistory } from 'react-router';
 const useStyles = makeStyles({
     table: {
         minWidth: 650,
     },
 });
 
-function createData(id, sellno, name, date, amount, actions) {
-    return { id, sellno, name, date, amount, actions };
+function createData(id, sellno, name, date, amount, paid_amount, actions) {
+    return { id, sellno, name, date, amount, paid_amount, actions };
 }
 
 
@@ -33,7 +34,7 @@ export default function BasicTable() {
     const [allData, setAllData] = useState([])
     const [openDialog, setOpenDialog] = React.useState(false);
     const [itemToDelete, setItemToDelete] = React.useState('');
-
+    const history = useHistory()
     const handleDialog = () => {
         setOpenDialog(!openDialog)
     }
@@ -47,10 +48,10 @@ export default function BasicTable() {
     useEffect(async () => {
         const res = await api.get('invoice/get_all')
         if (res.data.data) {
-            // alert(JSON.stringify(res.data.data))
+            // alert(JSON.stringify(res.data.data[0]))
             let temp = []
             res.data.data.map(x => {
-                temp.push(createData(x._id, 1, x.customer_name, x.date, x.grand_total))
+                temp.push(createData(x._id, 1, x.customer_name, x.date, x.grand_total, x.paid_amount))
             })
             setRows(temp)
             setAllData(res.data.data)
@@ -79,6 +80,7 @@ export default function BasicTable() {
                         <TableCell >Customer Name</TableCell>
                         <TableCell >Date</TableCell>
                         <TableCell >Amount</TableCell>
+                        <TableCell >Paid Amount</TableCell>
                         <TableCell >Actions</TableCell>
                     </TableRow>
                 </TableHead>
@@ -86,12 +88,15 @@ export default function BasicTable() {
                     {rows.map((row, index) => (
                         <TableRow key={row.id}>
                             <TableCell component="th" scope="row">
-                                {index + 1}
+                                {index + 1011}
                             </TableCell>
                             <TableCell >{row.sellno}</TableCell>
-                            <TableCell >{row.name}</TableCell>
+                            <TableCell onClick={() => history.push({ pathname: `/allinvoicesof`, state: { id: row.id, name: row.name } })} style={{ color: 'blue', cursor: 'pointer' }}>
+                                {row.name}
+                            </TableCell>
                             <TableCell >{row.date.split('T')[0]}</TableCell>
                             <TableCell >{row.amount}</TableCell>
+                            <TableCell >{row.paid_amount}</TableCell>
                             <TableCell >
                                 {/* <span onClick={() => history.push({ pathname: 'editcustomer', state: { id: row.Id } })}> */}
                                 {/* <span onClick={() => history.push({ pathname: history.location.pathname == '/customerlist' ? 'editcustomer' : 'editsupplier', state: { id: row.Id } })}>

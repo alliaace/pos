@@ -43,6 +43,8 @@ export default function AddInvoice() {
     const [type, setType] = useState('success')
     const history = useHistory()
     const classes = useStyles();
+    const [status, setStatus] = useState('add')
+    const [selectedItem, setSelectedItem] = useState('')
 
     const handleDialog = () => {
         setOpenDialog(!openDialog)
@@ -60,31 +62,34 @@ export default function AddInvoice() {
     }, [])
 
     const handleSubmit = async () => {
-
-        try {
-            const res = await api.post('category/add', {
+        var res = null
+        if (status == 'add')
+            res = await api.post('category/add', {
                 category_name: category
             })
-            if (res.data.data) {
-
-                setType('success')
-                setTitle('Added Succesfully')
-                setToast(false)
-                setToast(true)
-                window.location.reload()
-                // history.push({ pathname: '/invoice', state: { name: selectedProduct.product_name, price, quantity: selectedCartons, grand_total: total - discount } })
-            }
-            else {
-
-                setToast(false)
-                setToast(true)
-                setType('error')
-                setTitle(res.data.message)
-
-            }
-        } catch (error) {
-            // alert('i')
+        else
+            res = await api.put(`category/update/${selectedItem}`, {
+                category_name: category
+            })
+        if (res.data.data) {
+            // alert('in')
+            setStatus('add')
+            setType('success')
+            setTitle('Added Succesfully')
+            setToast(false)
+            setToast(true)
+            window.location.reload()
+            // history.push({ pathname: '/invoice', state: { name: selectedProduct.product_name, price, quantity: selectedCartons, grand_total: total - discount } })
         }
+        else {
+            // alert('in ewrror')
+            setToast(false)
+            setToast(true)
+            setType('error')
+            setTitle(res.data.message)
+
+        }
+
 
     }
     return (
@@ -101,7 +106,7 @@ export default function AddInvoice() {
                 <Grid container xs={12} style={{ marginTop: 20 }}>
                     <Grid item xs={3} style={{}}>Category Name</Grid>
                     <Grid item xs={4}>
-                        <input style={{ width: '100%', height: 35 }} placeholder="Category Name" onChange={e => setCategory(e.target.value)} />
+                        <input style={{ width: '100%', height: 35 }} placeholder="Category Name" onChange={e => setCategory(e.target.value)} value={category} />
                     </Grid>
                 </Grid>
 
@@ -142,19 +147,25 @@ export default function AddInvoice() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {rows.map((row) => (
+                                {rows.map((row, index) => (
                                     <TableRow key={row.sl}>
                                         <TableCell >
-                                            {row.sl}
+                                            {index + 1}
                                         </TableCell>
                                         <TableCell >{row.category}</TableCell>
                                         <TableCell >
                                             {/* <span onClick={() => history.push({ pathname: 'editcustomer', state: { id: row.Id } })}> */}
-                                            {/* <span
-                                            onClick={() => history.push({ pathname: history.location.pathname == '/customerlist' ? 'editcustomer' : 'editsupplier', state: { id: row.Id } })}
+                                            <span
+                                                // onClick={() => history.push({ pathname: history.location.pathname == '/customerlist' ? 'editcustomer' : 'editsupplier', state: { id: row.Id } })}
+                                                onClick={() => {
+                                                    setSelectedItem(row.sl)
+                                                    setStatus('edit')
+                                                    setCategory(row.category)
+                                                }
+                                                }
                                             >
                                                 <EditIcon style={{ color: '#003366', cursor: 'pointer' }} />
-                                            </span> */}
+                                            </span>
                                             <span
                                                 onClick={() => {
                                                     handleDialog();
