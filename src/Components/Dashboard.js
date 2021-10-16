@@ -20,6 +20,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MainListItems from './listItems';
 import Toast from './Toast/toast'
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 
 
@@ -199,11 +200,15 @@ export default function Dashboard() {
                     >
                         Add Stock
                     </Button>
-                    <IconButton color="inherit">
+                    {/* <IconButton color="inherit">
                         <Badge badgeContent={0} color="secondary">
                             <NotificationsIcon />
                         </Badge>
-                    </IconButton>
+                    </IconButton> */}
+                    <ExitToAppIcon style={{ marginLeft: 5 }} onClick={() => {
+                        localStorage.clear();
+                        window.location = '/'
+                    }} />
                 </Toolbar>
             </AppBar>
             <Drawer

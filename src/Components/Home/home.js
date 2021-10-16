@@ -19,7 +19,8 @@ export default function Home() {
 
         res = null
         res = await api.get('customer/get_all')
-        if (res.status == 200)
+        if (res.data.data == 200)
+            // alert(JSON.stringify(res.data))
             setTotalCustomers(res.data.data.length)
 
         res = null

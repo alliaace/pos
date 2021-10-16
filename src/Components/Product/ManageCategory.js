@@ -21,6 +21,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Bar from '../AppBar/AppBarComponent'
+import { isAdmin } from '../../helpers/isAuthenticated'
 
 const useStyles = makeStyles({
     table: {
@@ -154,26 +155,30 @@ export default function AddInvoice() {
                                         </TableCell>
                                         <TableCell >{row.category}</TableCell>
                                         <TableCell >
-                                            {/* <span onClick={() => history.push({ pathname: 'editcustomer', state: { id: row.Id } })}> */}
-                                            <span
-                                                // onClick={() => history.push({ pathname: history.location.pathname == '/customerlist' ? 'editcustomer' : 'editsupplier', state: { id: row.Id } })}
-                                                onClick={() => {
-                                                    setSelectedItem(row.sl)
-                                                    setStatus('edit')
-                                                    setCategory(row.category)
-                                                }
-                                                }
-                                            >
-                                                <EditIcon style={{ color: '#003366', cursor: 'pointer' }} />
-                                            </span>
-                                            <span
-                                                onClick={() => {
-                                                    handleDialog();
-                                                    setItemToDelete(row.sl)
-                                                }}
-                                            >
-                                                <DeleteIcon style={{ color: 'red', marginLeft: 10, cursor: 'pointer' }} />
-                                            </span>
+                                            {isAdmin() &&
+                                                <>
+                                                    {/* <span onClick={() => history.push({ pathname: 'editcustomer', state: { id: row.Id } })}> */}
+                                                    <span
+                                                        // onClick={() => history.push({ pathname: history.location.pathname == '/customerlist' ? 'editcustomer' : 'editsupplier', state: { id: row.Id } })}
+                                                        onClick={() => {
+                                                            setSelectedItem(row.sl)
+                                                            setStatus('edit')
+                                                            setCategory(row.category)
+                                                        }
+                                                        }
+                                                    >
+                                                        <EditIcon style={{ color: '#003366', cursor: 'pointer' }} />
+                                                    </span>
+                                                    <span
+                                                        onClick={() => {
+                                                            handleDialog();
+                                                            setItemToDelete(row.sl)
+                                                        }}
+                                                    >
+                                                        <DeleteIcon style={{ color: 'red', marginLeft: 10, cursor: 'pointer' }} />
+                                                    </span>
+                                                </>
+                                            }
                                         </TableCell>
 
                                     </TableRow>

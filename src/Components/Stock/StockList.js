@@ -29,6 +29,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Bar from '../AppBar/AppBarComponent'
+import { isAdmin } from '../../helpers/isAuthenticated'
 
 
 function createData(Id, Product_Name, Supplier_Name, Buy_Date, Product_Per_Carton, Quantity, Buy_Price, Sale_Price, Action) {
@@ -154,18 +155,23 @@ export default function EnhancedTable() {
                                         <TableCell >{row.Buy_Price}</TableCell>
                                         <TableCell >{row.Sale_Price}</TableCell>
                                         <TableCell >
-                                            {/* <span onClick={() => history.push({ pathname: 'editcustomer', state: { id: row.Id } })}> */}
-                                            <span onClick={() => history.push({ pathname: 'editstock', state: { id: row.Id } })}>
-                                                <EditIcon style={{ color: '#003366', cursor: 'pointer' }} />
-                                            </span>
-                                            <span
-                                                onClick={() => {
-                                                    handleDialog();
-                                                    setItemToDelete(row.Id)
-                                                }}
-                                            >
-                                                <DeleteIcon style={{ color: 'red', marginLeft: 10, cursor: 'pointer' }} />
-                                            </span>
+                                            {
+                                                isAdmin() && <>
+
+                                                    {/* <span onClick={() => history.push({ pathname: 'editcustomer', state: { id: row.Id } })}> */}
+                                                    <span onClick={() => history.push({ pathname: 'editstock', state: { id: row.Id } })}>
+                                                        <EditIcon style={{ color: '#003366', cursor: 'pointer' }} />
+                                                    </span>
+                                                    <span
+                                                        onClick={() => {
+                                                            handleDialog();
+                                                            setItemToDelete(row.Id)
+                                                        }}
+                                                    >
+                                                        <DeleteIcon style={{ color: 'red', marginLeft: 10, cursor: 'pointer' }} />
+                                                    </span>
+                                                </>
+                                            }
                                         </TableCell>
                                     </TableRow>
                                 ))}

@@ -91,6 +91,9 @@ export default function NestedList() {
                 <ListItemText primary="Dasboard" />
 
             </ListItem>
+
+
+
             <ListItem button onClick={handleClickInvoice}>
                 <ListItemIcon>
                     <ShowChartIcon style={{ color: '#f5f5f5' }} />
@@ -231,7 +234,13 @@ export default function NestedList() {
 
 
 
+            <ListItem button onClick={() => history.push({ pathname: '/addsubadmin', state: { data: 'sub admin' } })}>
+                <ListItemIcon>
+                    <ShowChartIcon style={{ color: '#f5f5f5' }} />
+                </ListItemIcon>
+                <ListItemText primary="Add SubAdmin" />
 
+            </ListItem>
 
 
 

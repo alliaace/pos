@@ -17,6 +17,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Bar from '../AppBar/AppBarComponent'
 import EditIcon from '@material-ui/icons/Edit';
 import { useHistory } from 'react-router-dom';
+import { isAdmin } from '../../helpers/isAuthenticated'
 const useStyles = makeStyles({
     table: {
         minWidth: 650,
@@ -102,18 +103,23 @@ export default function BasicTable() {
                             <TableCell >{row.supplier_price}</TableCell>
                             <TableCell >{row.supplier_name}</TableCell>
                             <TableCell >
-                                {/* <span onClick={() => history.push({ pathname: 'editcustomer', state: { id: row.Id } })}> */}
-                                <span onClick={() => history.push({ pathname: '/editproduct', state: { id: row.id } })}>
-                                    <EditIcon style={{ color: '#003366', cursor: 'pointer' }} />
-                                </span>
-                                <span
-                                    onClick={() => {
-                                        handleDialog();
-                                        setItemToDelete(row.id)
-                                    }}
-                                >
-                                    <DeleteIcon style={{ color: 'red', marginLeft: 10, cursor: 'pointer' }} />
-                                </span>
+                                {
+                                    isAdmin() &&
+                                    <>
+                                        {/* <span onClick={() => history.push({ pathname: 'editcustomer', state: { id: row.Id } })}> */}
+                                        <span onClick={() => history.push({ pathname: '/editproduct', state: { id: row.id } })}>
+                                            <EditIcon style={{ color: '#003366', cursor: 'pointer' }} />
+                                        </span>
+                                        <span
+                                            onClick={() => {
+                                                handleDialog();
+                                                setItemToDelete(row.id)
+                                            }}
+                                        >
+                                            <DeleteIcon style={{ color: 'red', marginLeft: 10, cursor: 'pointer' }} />
+                                        </span>
+                                    </>
+                                }
                             </TableCell>
                         </TableRow>
                     ))}

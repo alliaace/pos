@@ -13,10 +13,17 @@ import ManageProduct from '../Components/Product/ManageProduct'
 import Manageinvoice from '../Components/Invoice/ManageInvoice'
 import PersonDetail from '../Components/PersonDetail/PersonDetail'
 import AllInvoices from '../Components/Invoice/AllInvoices'
+import StockOfAllSuppliers from '../Components/Stock/StockOfAllSuppliers'
+import AdminLogin from "../Components/AdminLogin/AdminLogin";
+
 
 export default function App() {
     return (
         <Switch>
+
+            <Route exact path="/addsubadmin" component={AdminLogin} />
+
+
             <Route exact path="/" component={Home} />
             <Route exact path="/customerlist" component={CustomerList} />
             <Route exact path="/addcustomer" component={Checkout} />
@@ -31,6 +38,7 @@ export default function App() {
 
 
             <Route exact path="/stocklist" component={StockList} />
+            <Route exact path="/stockofsupplier" component={StockOfAllSuppliers} />
             <Route exact path="/addstock" component={StockCheckout} />
             <Route exact path="/editstock" component={StockCheckout} />
 

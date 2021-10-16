@@ -16,6 +16,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Bar from '../AppBar/AppBarComponent'
 import { useHistory } from 'react-router';
+import { isAdmin } from '../../helpers/isAuthenticated'
 const useStyles = makeStyles({
     table: {
         minWidth: 650,
@@ -110,8 +111,10 @@ export default function BasicTable() {
                                         handleDialog();
                                         setItemToDelete(row.Id)
                                     }}
-                                >
-                                    <DeleteIcon style={{ color: 'red', marginLeft: 10, cursor: 'pointer' }} />
+                                >{
+                                        isAdmin() &&
+                                        <DeleteIcon style={{ color: 'red', marginLeft: 10, cursor: 'pointer' }} />
+                                    }
                                 </span>
                             </TableCell>
 
