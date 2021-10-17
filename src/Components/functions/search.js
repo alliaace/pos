@@ -48,9 +48,9 @@ export default function searchTailor(query, data, from) {
     if (from == 'paymentlist') {
         // alert(JSON.stringify(data))
         data.map((x) => {
-
+            let name = x.supplier_name ? x.supplier_name : x.customer_name
             // alert(name)
-            if (x.from.toUpperCase().match(re) != null || x.date.toUpperCase().match(re) != null || x?.customer_name.toUpperCase().match(re) != null || x?.supplier_name.toUpperCase().match(re) != null || x.details.toUpperCase().match(re) != null) {
+            if (x.from.toUpperCase().match(re) != null || x.date.toUpperCase().match(re) != null || name.toUpperCase().match(re) != null || x.details.toUpperCase().match(re) != null) {
                 // alert('hewre')
                 temp1.push(x)
             }

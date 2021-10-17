@@ -274,7 +274,7 @@ export default function NestedList() {
 
 
             {
-                isAdmin &&
+                isAdmin() &&
 
                 <ListItem button onClick={() => history.push({ pathname: '/addsubadmin', state: { data: 'sub admin' } })}>
                     <ListItemIcon>

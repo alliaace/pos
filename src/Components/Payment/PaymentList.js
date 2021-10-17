@@ -98,8 +98,10 @@ export default function EnhancedTable() {
             if (res1.data.data) {
                 // alert(JSON.stringify(res1.data.data[0]))
 
-                res1.data.data.map(item =>
+                res1.data.data.map(item => {
+
                     temp.push(createData(item._id, item.from, item.supplier_name, item.details, item.paid_amount, item.date, item.remaing_balance))
+                }
                 )
                 setRows(temp)
                 setAllStock(res1.data.data)
@@ -113,7 +115,7 @@ export default function EnhancedTable() {
     const setDataForSearch = (data) => {
         var temp = []
         data.map(item =>
-            temp.push(createData(item._id, item.from, item.supplier_name, item.details, item.paid_amount, item.date, item.remaing_balance))
+            temp.push(createData(item._id, item.from, item.supplier_name || item.customer, item.details, item.paid_amount, item.date, item.remaing_balance))
         )
         setRows(temp)
     }

@@ -9,8 +9,8 @@ import { useHistory } from 'react-router';
 
 
 export default function AdminLogin(props) {
-    const [email, setEmail] = useState('a@a.com')
-    const [password, setPassword] = useState('12345678')
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
     const [first_name, set_first_name] = useState('')
     const [last_name, set_last_name] = useState('')
     const history = useHistory()
