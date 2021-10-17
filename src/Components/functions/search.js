@@ -45,5 +45,16 @@ export default function searchTailor(query, data, from) {
             }
         })
     }
+    if (from == 'paymentlist') {
+        // alert(JSON.stringify(data))
+        data.map((x) => {
+
+            // alert(name)
+            if (x.from.toUpperCase().match(re) != null || x.date.toUpperCase().match(re) != null || x?.customer_name.toUpperCase().match(re) != null || x?.supplier_name.toUpperCase().match(re) != null || x.details.toUpperCase().match(re) != null) {
+                // alert('hewre')
+                temp1.push(x)
+            }
+        })
+    }
     return temp1
 }

@@ -15,6 +15,8 @@ import PersonDetail from '../Components/PersonDetail/PersonDetail'
 import AllInvoices from '../Components/Invoice/AllInvoices'
 import StockOfAllSuppliers from '../Components/Stock/StockOfAllSuppliers'
 import AdminLogin from "../Components/AdminLogin/AdminLogin";
+import PaymentForm from '../Components/Payment/PaymentForm'
+import PaymentList from '../Components/Payment/PaymentList'
 
 
 export default function App() {
@@ -62,6 +64,14 @@ export default function App() {
 
 
             <Route exact path="/allinvoicesof" component={AllInvoices} />
+
+
+
+            <Route exact path="/customerpayment" component={PaymentForm} />
+            <Route exact path="/customerpaymentList" component={PaymentList} />
+
+            <Route exact path="/supplierpayment" component={PaymentForm} />
+            <Route exact path="/supplierpaymentList" component={PaymentList} />
         </Switch>
     );
 }

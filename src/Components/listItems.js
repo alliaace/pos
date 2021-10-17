@@ -16,6 +16,7 @@ import ListIcon from '@material-ui/icons/List';
 import { useHistory } from 'react-router-dom';
 import AddIcon from '@material-ui/icons/Add';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
+import { isAdmin } from '../helpers/isAuthenticated'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -35,6 +36,7 @@ export default function NestedList() {
     const [customer, setCustomer] = React.useState(false);
     const [supplier, setSupplier] = React.useState(false);
     const [stock, setStock] = React.useState(false);
+    const [payment, setPayment] = React.useState(false);
     const [invoice, setInvoice] = React.useState(false);
     const [suite, setSuite] = React.useState(false);
 
@@ -52,6 +54,9 @@ export default function NestedList() {
     };
     const handleClickSuite = () => {
         setSuite(!suite);
+    };
+    const handleClickPayment = () => {
+        setPayment(!payment);
     };
 
 
@@ -234,13 +239,51 @@ export default function NestedList() {
 
 
 
-            <ListItem button onClick={() => history.push({ pathname: '/addsubadmin', state: { data: 'sub admin' } })}>
+
+
+
+            <ListItem button onClick={handleClickPayment}>
                 <ListItemIcon>
                     <ShowChartIcon style={{ color: '#f5f5f5' }} />
                 </ListItemIcon>
-                <ListItemText primary="Add SubAdmin" />
-
+                <ListItemText primary="Payments" />
+                {payment ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
+            <Collapse in={payment} timeout="auto" unmountOnExit>
+                <List component="div" disablePadding>
+                    <ListItem button className={classes.nested} onClick={() => window.location = '/customerpaymentList'}>
+                        <ListItemIcon>
+                            <ListIcon style={{ color: '#f5f5f5' }} />
+                        </ListItemIcon>
+                        <ListItemText primary="Customer Payment" />
+                    </ListItem>
+                    <ListItem button className={classes.nested} onClick={() => window.location = '/supplierpaymentList'}>
+                        <ListItemIcon>
+                            <AddIcon style={{ color: 'f5f5f5' }} />
+                        </ListItemIcon>
+                        <ListItemText primary="Supplier Payment" />
+                    </ListItem>
+
+                </List>
+            </Collapse>
+
+
+
+
+
+
+
+            {
+                isAdmin &&
+
+                <ListItem button onClick={() => history.push({ pathname: '/addsubadmin', state: { data: 'sub admin' } })}>
+                    <ListItemIcon>
+                        <ShowChartIcon style={{ color: '#f5f5f5' }} />
+                    </ListItemIcon>
+                    <ListItemText primary="Add SubAdmin" />
+
+                </ListItem>
+            }
 
 
 

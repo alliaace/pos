@@ -8,7 +8,7 @@ import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import Toolbar from '@material-ui/core/Toolbar';
 import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import { Grid } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import search from '../functions/search'
 
 
@@ -50,6 +50,19 @@ export default function AppBarComponent(props) {
                             {props.link2}
                         </Typography>
                     </Breadcrumbs>
+                    {
+                        props.isButton &&
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            size="small"
+                            className={classes.button}
+                            // startIcon={<SaveIcon />}
+                            onClick={props.onClick}
+                        >
+                            Add Payment
+                        </Button>
+                    }
 
                 </Toolbar>
             </AppBar>
