@@ -235,7 +235,7 @@ class ComponentToPrint extends React.Component {
                                         <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'left' }}>Due</p>
                                         <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'right' }}>{data.grand_total - data.paid_amount}</p>
                                     </div>
-                                    <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0 }}>Powered By: Umdah</p>
+                                    <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0 }}>Powered By: Heaven Engineering</p>
                                 </div>
                             </Grid>
                         </Grid>

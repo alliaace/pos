@@ -212,7 +212,7 @@ class ComponentToPrint extends React.Component {
                             <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'left' }}>Due</p>
                             <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0, float: 'right' }}>0</p>
                         </div>
-                        <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0 }}>Powered By: Umdah</p>
+                        <p style={{ fontSize: 20, fontWeight: 'bold', lineHeight: 0 }}>Powered By: Heaven Engineering</p>
 
 
                     </div>
